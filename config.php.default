@@ -1,0 +1,6 @@
+<?php
+$hostname = "localhost";	//Имя сервера
+$username = "root";			//Имя пользователя
+$password = "";				//Пароль пользователя
+$dbName = "MyFinDB";		//Имя базы данных
+?>
