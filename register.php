@@ -1,10 +1,5 @@
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
-
 <?
+include "header.php";
 require_once "connect.php";
 
 if(isset($_POST['submit']))
@@ -85,5 +80,4 @@ if(isset($_POST['submit']))
 <input name="submit" type="submit" value="Зарегистрироваться">
 
 </form>
-</body>
-</html>
+<?include "footer.php";?>

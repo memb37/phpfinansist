@@ -1,8 +1,4 @@
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
+<?include "header.php";?>
 
 <form method="POST">
 
@@ -60,9 +56,5 @@ if(isset($_POST['submit']))
         print "Вы ввели неправильный логин/пароль";
     }
 }
-
+include "footer.php";
 ?>
-
-
-</body>
-</html>

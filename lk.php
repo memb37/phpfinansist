@@ -1,9 +1,5 @@
-﻿<html>
-<head>	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<title></title>
-</head>
-<body>
 <?php
+include "header.php";
 require_once "check.php";
 
 if (!$auth) { header("Location: login.php"); exit();}
@@ -64,8 +60,5 @@ catch(PDOException $e)
 </tr>
 
 </table>
-<? include "logout.php" ?>
-
-
-</body>
-</html>
+<? include "logout.php";
+include "footer.php"; ?>
