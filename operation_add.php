@@ -1,9 +1,6 @@
-﻿<html>
-<head>	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<title></title>
-</head>
-<body>
+
 <?php
+include "header.php";
 require_once "check.php";
 if (!$auth) { header("Location: login.php"); exit();}
 
@@ -111,4 +108,4 @@ if (isset($_POST['submit']))
 <a href="lk.php">назад
 
 
-</body></html>
+<?include "footer.php";?>
