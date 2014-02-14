@@ -17,44 +17,48 @@
 <?
 require_once "connect.php";
 
-
 if(isset($_POST['submit']))
-
 {
+   	$login = $_POST['login'];
+	try
+	{
+    	$stmt = $db->prepare("SELECT user_id, password FROM users WHERE login = :login LIMIT 1");
+		$stmt->bindParam(':login', $login);
+		$stmt->execute();
+		$row = $stmt -> fetch(PDO::FETCH_ASSOC);
+	}
 
-   	$login=$_POST['login'];
-    $query = mysql_query("SELECT `user_id`, `password` FROM `users` WHERE `login`='$login' LIMIT 1");
+	catch (PDOException $e) 
+			{
+			echo $e->getMessage();
+			}
 
-    $data = mysql_fetch_assoc($query);
-
-
-    if($data['password'] === md5(md5($_POST['password'])))
-
+    if($row['password'] === md5(md5($_POST['password'])))
     {
-
-
         $hash = md5(microtime().getmypid());
-
-    
-        mysql_query("UPDATE users SET hash='".$hash."' WHERE user_id='".$data['user_id']."'");
+		try 
+		{
+	    	$stmt = $db->prepare("UPDATE users SET hash = :hash WHERE user_id = :user_id");
+			$stmt->bindParam(':hash', $hash); 
+			$stmt->bindParam(':user_id', $row['user_id']); 
+			$stmt->execute();
+		} 
+		catch (PDOException $e) 
+		{
+			echo $e->getMessage();
+		}
 
         
-        setcookie("id", $data['user_id'], time()+60*60*24*30);
-
+        setcookie("id", $row['user_id'], time()+60*60*24*30);
         setcookie("hash", $hash, time()+60*60*24*30);
 
         header("Location: lk.php"); exit();
-
     }
 
     else
-
     {
-
         print "Вы ввели неправильный логин/пароль";
-
     }
-
 }
 
 ?>
