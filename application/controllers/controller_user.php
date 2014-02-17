@@ -8,7 +8,8 @@ class Controller_User extends Controller
     }
 function action_index()
 {
-	
+	$data = $this->model->get_operations();
+    $this->view->generate('lk_view.php', 'template_view.php', $data);
 }
 function action_login() 
 {	

@@ -24,4 +24,4 @@
 	</td>
 </tr>
 </table>
-<a href="../lk">назад</a>
+<a href="../user">назад</a>
