@@ -12,7 +12,7 @@
 	<td>
 		<select name="cat_id">
 			<? foreach ($data as $d)
-				echo "<option value={$d['category_id']}>{$d['category_name']}</option>"; 
+				{echo "<option value={$d['category_id']}>{$d['category_name']}</option>";} 
 			?>
 		</select>		
 	</td>
