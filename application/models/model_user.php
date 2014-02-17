@@ -8,7 +8,8 @@ class Model_User extends Model
 		global $db;
 		try
 		{
-			$stmt = $db->prepare("SELECT `user_name`, `login`, `e-mail` FROM users WHERE user_id= 13");
+			$stmt = $db->prepare("SELECT `user_name`, `login`, `e-mail` FROM users WHERE user_id= :id");
+			$stmt->bindParam(':id', $_SESSION['id']);			
 			$stmt->execute();
 			$data = $stmt->fetch(); 
 			return ($data);
