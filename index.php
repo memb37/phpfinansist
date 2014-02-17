@@ -1,10 +1,22 @@
+<?php
+ini_set('display_errors', 1);
+include "config.php";
 
-<?
-include "header.php";
-require_once "check.php";
-if ($auth) { header("Location: lk.php"); exit();}
-?>
-<a href="login.php"> Войти </a><br>
-<a href="register.php"> Зарегистрироваться </a>
+		try
+		{
+			$db = new PDO("mysql:host=$hostname; dbname=$dbName", $username, $password); 
+			$db->SetAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$db->exec("set names utf8");
+		}
 
-<?include "footer.php";?>
+		catch(PDOException $e)
+		{
+			echo "Не могу подключиться к БД " . $e->getMessage();
+		}
+require_once 'application/bootstrap.php';
+
+
+
+
+
+
