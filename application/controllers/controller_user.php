@@ -3,11 +3,12 @@ class Controller_User extends Controller
 {
     function __construct()
     {
-        $this->model = new Model_User();
+        
         $this->view = new View();
     }
 function action_index()
 {
+	$this->model = new Model_User();
 	$data = $this->model->get_operations();
     $this->view->generate('lk_view.php', 'template_view.php', $data);
 }
@@ -69,6 +70,7 @@ function action_logout()
 
 function action_profile()
 {
+		$this->model = new Model_User();
         $data = $this->model->get_data();		
         $this->view->generate('profile_view.php', 'template_view.php', $data);
 }
@@ -76,6 +78,7 @@ function action_register()
 {	
 	if (isset($_POST['submit_reg']))
 	{
+	$this->model = new Model_User();
 	global $db;
 		$err = array();
     # проверям логин
