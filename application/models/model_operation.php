@@ -11,10 +11,12 @@ class Model_Operation extends Model
 				
 		try
 		{
-			$stmt = $db->prepare("SELECT category_id, category_name FROM categories WHERE operation_type_id = :op_type");
+			$stmt = $db->prepare("SELECT category_id, category_name FROM categories 
+									WHERE category_type_id = :op_type AND (user_id = :user_id OR user_id = 777)
+									ORDER BY category_name");
 			$stmt->bindParam(':op_type', $op_type);
+			$stmt->bindParam(':user_id', $_SESSION['user_id']);
 			$stmt->execute(); 
-
 			while ($row = $stmt->fetch())
 				{$data[] = $row;}
 			return ($data);

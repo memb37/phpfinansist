@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Фев 13 2014 г., 15:05
+-- Время создания: Фев 19 2014 г., 01:57
 -- Версия сервера: 5.5.34-0ubuntu0.12.10.1
 -- Версия PHP: 5.4.6-1ubuntu1.5
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- База данных: `MyFin`
+-- База данных: `MyFinDB`
 --
 
 -- --------------------------------------------------------
@@ -28,21 +28,40 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `operation_type_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `category_type_id` int(11) NOT NULL,
   `category_name` varchar(30) NOT NULL,
   PRIMARY KEY (`category_id`),
-  KEY `operation_type_id` (`operation_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+  KEY `operation_type_id` (`category_type_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=91 ;
 
 --
 -- Дамп данных таблицы `categories`
 --
 
-INSERT INTO `categories` (`category_id`, `operation_type_id`, `category_name`) VALUES
-(1, 1, 'одежда'),
-(2, 1, 'еда'),
-(3, 1, 'развлечения'),
-(4, 2, 'зарплата');
+INSERT INTO `categories` (`category_id`, `user_id`, `category_type_id`, `category_name`) VALUES
+(1, 777, 1, 'без категории'),
+(2, 777, 2, 'без категории');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `category_type`
+--
+
+CREATE TABLE IF NOT EXISTS `category_type` (
+  `category_type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_type_name` varchar(30) NOT NULL,
+  PRIMARY KEY (`category_type_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Дамп данных таблицы `category_type`
+--
+
+INSERT INTO `category_type` (`category_type_id`, `category_type_name`) VALUES
+(1, 'расход'),
+(2, 'доход');
 
 -- --------------------------------------------------------
 
@@ -60,27 +79,7 @@ CREATE TABLE IF NOT EXISTS `operations` (
   PRIMARY KEY (`operation_id`),
   KEY `category_id` (`category_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=91 ;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `operation_type`
---
-
-CREATE TABLE IF NOT EXISTS `operation_type` (
-  `operation_type_id` int(11) NOT NULL AUTO_INCREMENT,
-  `operation_type_name` varchar(30) NOT NULL,
-  PRIMARY KEY (`operation_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
---
--- Дамп данных таблицы `operation_type`
---
-
-INSERT INTO `operation_type` (`operation_type_id`, `operation_type_name`) VALUES
-(1, 'расход'),
-(2, 'доход');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=167 ;
 
 -- --------------------------------------------------------
 
@@ -94,20 +93,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `e-mail` varchar(30) NOT NULL,
   `login` varchar(30) NOT NULL,
   `password` varchar(32) NOT NULL,
-  `hash` varchar(32) NOT NULL,
-  `balance` int(11) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
-
---
--- Ограничения внешнего ключа таблицы `categories`
---
-ALTER TABLE `categories`
-  ADD CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`operation_type_id`) REFERENCES `operation_type` (`operation_type_id`);
 
 --
 -- Ограничения внешнего ключа таблицы `operations`
