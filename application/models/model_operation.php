@@ -39,7 +39,7 @@ class Model_Operation extends Model
 		{
 		$stmt = $db->prepare("INSERT INTO operations (user_id, category_id, summ, date, comment) 
 									VALUES (:id, :cat_id, :summ, :dt, :comm)");
-		$data = array('id' => $_SESSION['id'], 'cat_id' => $_POST['cat_id'], 'summ' => $_POST['summ'], 'dt' => $_POST['date'], 'comm' => $_POST['comment']);
+		$data = array('id' => $_SESSION['user_id'], 'cat_id' => $_POST['cat_id'], 'summ' => $_POST['summ'], 'dt' => $_POST['date'], 'comm' => $_POST['comment']);
 		$stmt->execute($data);
 		}
 

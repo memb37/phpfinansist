@@ -9,7 +9,7 @@ class Controller {
 	static function auth()
 	{
 		global $db;
-		if(isset($_SESSION['id']))
+		if(isset($_SESSION['user_id']))
 		{   
 				echo "<form method=\"POST\" action=\"".MAINPAGE."/user/logout\">
 					<input type=\"submit\" name=\"logout\"  value = \"Выход\">

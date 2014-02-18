@@ -17,13 +17,13 @@ function action_login()
 	$this->view->generate('login_view.php', 'template_view.php');
 	global $db;
 	
-	if(isset($_POST['username']) && isset($_POST['password'])) 
+	if(isset($_POST['login']) && isset($_POST['password'])) 
 	{
 		$this->model = new Model_User();
 		$data = $this->model->get_user();
 	    if($data['password'] === md5(md5($_REQUEST['password']))) 
 		{  
-			$_SESSION['id'] = $data['user_id'];
+			$_SESSION['user_id'] = $data['user_id'];
 			$_SESSION['user_name'] = $data['user_name'];
 			header("Location: ".MAINPAGE); exit();
     	} 

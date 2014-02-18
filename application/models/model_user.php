@@ -9,7 +9,7 @@ class Model_User extends Model
 		try
 		{
 			$stmt = $db->prepare("SELECT `user_name`, `login`, `e-mail` FROM users WHERE user_id= :id");
-			$stmt->bindParam(':id', $_SESSION['id']);			
+			$stmt->bindParam(':id', $_SESSION['user_id']);			
 			$stmt->execute();
 			$data = $stmt->fetch(); 
 			return ($data);
@@ -27,7 +27,7 @@ class Model_User extends Model
 		try
 		{
     		$stmt = $db->prepare("SELECT user_id, user_name, password FROM users WHERE login = :login LIMIT 1");
-			$stmt->bindParam(':login', $_POST['username']);
+			$stmt->bindParam(':login', $_POST['login']);
 			$stmt->execute();
 			$row = $stmt -> fetch(PDO::FETCH_ASSOC);
 		}
@@ -82,7 +82,7 @@ class Model_User extends Model
 			INNER JOIN categories USING(category_id) 
 			INNER JOIN operation_type USING(operation_type_id) 
 			WHERE user_id= :id ORDER BY date DESC, operation_id DESC LIMIT 0,10");
-			$stmt->bindParam(':id', $_SESSION['id']); 
+			$stmt->bindParam(':id', $_SESSION['user_id']); 
 			$stmt->execute();
 			while ($row = $stmt->fetch())
 				{$data[] = $row;}
