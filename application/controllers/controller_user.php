@@ -19,48 +19,21 @@ function action_login()
 	
 	if(isset($_POST['username']) && isset($_POST['password'])) 
 	{
-	try
-	{
-    	$stmt = $db->prepare("SELECT user_id, password FROM users WHERE login = :login LIMIT 1");
-		$stmt->bindParam(':login', $_POST['username']);
-		$stmt->execute();
-		$row = $stmt -> fetch(PDO::FETCH_ASSOC);
+		$this->model = new Model_User();
+		$data = $this->model->get_user();
+	    if($data['password'] === md5(md5($_REQUEST['password']))) 
+		{  
+			$_SESSION['id'] = $data['user_id'];
+			$_SESSION['user_name'] = $data['user_name'];
+			header("Location: ".MAINPAGE); exit();
+    	} 
+		else 
+		{ 
+    	    echo "Неверный логин или пароль";	
+    	}
 	}
-
-	catch (PDOException $e) 
-			{
-			echo $e->getMessage();
-			}
-	
-    if($row['password'] === md5(md5($_REQUEST['password']))) 
-	{
-		$hash = md5(microtime().getmypid());
-		try 
-		{
-	    	$stmt = $db->prepare("UPDATE users SET hash = :hash WHERE user_id = :user_id");
-			$stmt->bindParam(':hash', $hash); 
-			$stmt->bindParam(':user_id', $row['user_id']); 
-			$stmt->execute();
-		} 
-		catch (PDOException $e) 
-		{
-			echo $e->getMessage();
-		}        
-		$_SESSION['id'] = $row['user_id'];
-		$_SESSION['hash'] = $hash;
-
-
-
-        
-		header("Location: ".MAINPAGE); exit();
-    } 
-	else 
-	{ 
-        echo "Invalid";
-		
-    }
 }
-}
+
 
 function action_logout()
 {

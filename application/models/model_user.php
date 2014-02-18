@@ -21,6 +21,23 @@ class Model_User extends Model
 		}
     }
 	
+	public function get_user()
+	{
+		global $db;
+		try
+		{
+    		$stmt = $db->prepare("SELECT user_id, user_name, password FROM users WHERE login = :login LIMIT 1");
+			$stmt->bindParam(':login', $_POST['username']);
+			$stmt->execute();
+			$row = $stmt -> fetch(PDO::FETCH_ASSOC);
+		}
+
+		catch (PDOException $e) 
+		{
+			echo $e->getMessage();
+		}
+		return $row;
+	}
 	public function add_user()
 	{
 		global $db;
