@@ -7,9 +7,10 @@ if ($data)
 {
 	foreach ($data as $d)
 	{
-		echo $d['date']." ".$d['operation_type_name']."  ".$d['category_name']."  ".$d['summ']."<br>";
+		echo $d['date']." ".$d['category_type_name']."  ".$d['category_name']."  ".$d['summ']."<br>";
 	}
 }
 
 ?>
+<a href="category">редактировать категории</a>
 
