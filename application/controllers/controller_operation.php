@@ -10,4 +10,11 @@ class Controller_Operation extends Controller
         $data = $this->model->get_data();		
         $this->view->generate('operation_view.php', 'template_view.php', $data);
     }
+
+    function action_report()
+    {	
+		$this->model = new Model_Operation();
+		$data = $this->model->get_report();
+		$this->view->generate('report_view.php', 'template_view.php', $data);
+	}
 }

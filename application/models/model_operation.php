@@ -50,4 +50,36 @@ class Model_Operation extends Model
 			echo $e->getMessage();
 		}
 	}
+
+	public function get_report()
+	{
+		global $db; 
+		$date_from=date('Y-m-01');
+		$date_to=date('Y-m-d');
+
+		$stmt = $db->prepare("SELECT operation_id, date, category_name, summ, category_type_name, comment from operations 
+		INNER JOIN categories USING(category_id) 
+		INNER JOIN category_type USING(category_type_id) 
+		WHERE (operations.user_id = :id) AND (date BETWEEN :date_from AND :date_to)
+		ORDER BY date DESC, operation_id DESC ");
+		$stmt->bindParam(':id', $_SESSION['user_id']); 
+		if (isset($_POST['date_from']) and isset($_POST['date_to']))		
+		{
+			$stmt->bindParam(':date_from', $_POST['date_from']);
+			$stmt->bindParam(':date_to', $_POST['date_to']);
+		}	
+		else
+		{
+			$stmt->bindParam(':date_from', $date_from);
+			$stmt->bindParam(':date_to', $date_to);
+		}
+
+		$stmt->execute();
+
+		while ($row = $stmt->fetch())
+			{$data[] = $row;}
+		if (isset ($data)) {return ($data);}
+
+	}
+
 }
