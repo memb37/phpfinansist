@@ -8,7 +8,7 @@ class Model_User extends Model
 		global $db;
 		try
 		{
-			$stmt = $db->prepare("SELECT `user_name`, `login`, `e-mail` FROM users WHERE user_id= :id");
+			$stmt = $db->prepare("SELECT `user_name`, `login`, `email` FROM users WHERE user_id= :id");
 			$stmt->bindParam(':id', $_SESSION['user_id']);			
 			$stmt->execute();
 			$data = $stmt->fetch(); 
@@ -44,8 +44,9 @@ class Model_User extends Model
 		$password = md5(md5(trim($_POST['password'])));
 		try
 		{
-			$stmt = $db->prepare("INSERT INTO users (login, password, user_name) VALUES (:login, :password, :user_name)");
-			$data = array('login' => $_POST['login'], 'password' => $password, 'user_name' => $_POST['name']);
+			$stmt = $db->prepare("INSERT INTO users (login, password, user_name, email) VALUES (:login, :password, :user_name, :email)");
+			$data = array('login' => $_POST['login'], 'password' => $password, 
+							'user_name' => $_POST['name'], 'email' => $_POST['email']);
 			$stmt->execute($data);			
 		} 
        

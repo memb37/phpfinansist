@@ -17,10 +17,10 @@
 </tr>
 <tr>
 	<td>
-		e-mail
+		email
 	</td>
 	<td>
-		<?=$data['e-mail']?>
+		<?=$data['email']?>
 	</td>
 </tr>
 </table>
