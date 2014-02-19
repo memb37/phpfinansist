@@ -11,6 +11,10 @@
 		<input type=hidden name=category_type_id value=<?=$data[0]['category_type_id']?>></input>
 	</td>
 </tr>
+<?if (isset($_SESSION['error'])):?>
+	<h1><?=$_SESSION['error']?></h1>
+	<?unset($_SESSION['error']); 
+endif?>
 </table>
 <table border=1 align=center>
 <tr>

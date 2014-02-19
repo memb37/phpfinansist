@@ -18,10 +18,18 @@ class Model_Category extends Model
 		public function add_category()
 		{
 			global $db;
-			$stmt = $db->prepare("INSERT INTO categories (user_id, category_type_id, category_name) 
+			if ($_POST['category_name']=="")
+			{
+				$_SESSION['error'] = "Название категории не может быть пустым";
+			}
+			else
+			{
+				$stmt = $db->prepare("INSERT INTO categories (user_id, category_type_id, category_name) 
 									VALUES (:user_id, :category_type_id, :category_name)");
-			$data = array('user_id' => $_SESSION['user_id'], 'category_type_id' => $_POST['category_type_id'], 'category_name' => $_POST['category_name']);
-			$stmt->execute($data);
+				$data = array('user_id' => $_SESSION['user_id'], 'category_type_id' => $_POST['category_type_id'], 
+							'category_name' => $_POST['category_name']);
+				$stmt->execute($data);
+			}
 		}
 
 		public function delete_category()
@@ -36,11 +44,19 @@ class Model_Category extends Model
 		public function edit_category()
 		{
 			global $db;
-			$stmt=$db->prepare("UPDATE categories SET category_name = :category_name WHERE category_id = :category_id AND user_id = :user_id");
-			$stmt->bindParam(':category_name', $_POST[$_POST['category_id']]);			
-			$stmt->bindParam(':category_id', $_POST['category_id']);
-			$stmt->bindParam(':user_id', $_SESSION['user_id']);
-			$stmt->execute();
+			if ($_POST[$_POST['category_id']]=="")
+			{
+				$_SESSION['error'] = "Название категории не может быть пустым";
+			}
+			else
+			{
+				$stmt=$db->prepare("UPDATE categories SET category_name = :category_name 
+								WHERE category_id = :category_id AND user_id = :user_id");
+				$stmt->bindParam(':category_name', $_POST[$_POST['category_id']]);			
+				$stmt->bindParam(':category_id', $_POST['category_id']);
+				$stmt->bindParam(':user_id', $_SESSION['user_id']);
+				$stmt->execute();
+			}
 		}
 }
 
