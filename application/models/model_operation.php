@@ -54,8 +54,10 @@ class Model_Operation extends Model
 	public function get_report()
 	{
 		global $db; 
-		$date_from=date('Y-m-01');
-		$date_to=date('Y-m-d');
+		if (!isset($_POST['date_from']))
+			{$_POST['date_from']=date('Y-m-01');}
+		if (!isset($_POST['date_to']))
+			{$_POST['date_to']=date('Y-m-d');}
 
 		$stmt = $db->prepare("SELECT operation_id, date, category_name, summ, category_type_name, comment from operations 
 		INNER JOIN categories USING(category_id) 

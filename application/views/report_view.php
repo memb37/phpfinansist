@@ -43,8 +43,8 @@
 <?endif?>
 </table>
 <form method="POST">
-С <input name="date_from" size = "10" value=<?=date('Y-m-01')?> type="text">
-по <input name="date_to" size = "10" value=<?=date('Y-m-d')?> type="text">
+С <input name="date_from" size = "10" value=<?=$_POST['date_from']?> type="text">
+по <input name="date_to" size = "10" value=<?=$_POST['date_to']?> type="text">
 <input type=submit value=показать>
 </form>
 <a href="../user">назад</a>
