@@ -9,6 +9,43 @@
     <title>Главная</title>
 </head>
 <body>
-    <?php include 'application/views/'.$content_view; ?>
+     <div class="blog-masthead">	<!-- TOP NAVBAR-->
+      <div class="container">
+        <nav class="blog-nav text-right">
+          <a class="blog-nav-item" href="#">Профиль</a>
+          <a class="blog-nav-item" href="#">Выход</a>
+        </nav>
+      </div>
+    </div>
+
+
+	<div class="container"> 			<!--  HEADER-->
+		<div class="row">
+			<div class="col-md-12 text-center page-header">
+				<h1>phpfinansist</h1>
+			</div>
+		</div>
+	</div>
+
+ 	<div class="row">				<!-- LEFT NAVBAR-->
+		<div class="col-md-1 col-md-offset-2 left-menu">
+			<ul class="nav nav-list">
+    			<li><a href="#">Домой</a></li>
+    			<li><a href="#">Операции</a></li>
+    			<li><a href="#">Отчет</a></li>
+    			<li><a href="#">Категории</a></li>
+			</ul>
+		</div>
+		<div class="col-md-6  text-center content">		<!-- CONTENT-->
+			<?php include 'application/views/'.$content_view; ?>
+		</div>
+	</div>
+
+
+    <div id="footer">				<!-- FOOTER-->
+      <div class="container">
+        <p class="text-muted">Подвальчик</p>
+      </div>
+    </div>
 </body>
 </html>
