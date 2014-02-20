@@ -14,8 +14,8 @@ function action_index()
 }
 function action_login() 
 {	
-	$this->view->generate('login_view.php', 'template_view.php');
-	global $db;
+	
+	global $db;$data=null;
 	
 	if(isset($_POST['login']) && isset($_POST['password'])) 
 	{
@@ -29,9 +29,10 @@ function action_login()
     	} 
 		else 
 		{ 
-    	    echo "Неверный логин или пароль";	
+    	    $data = array("message" => "Неверный логин или пароль") ;	
     	}
 	}
+	$this->view->generate('login_view.php', 'template_view.php', $data);
 }
 
 
