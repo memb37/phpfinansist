@@ -3,7 +3,7 @@ vagrantfile-local:
     vm:
         box: ubuntu-precise12042-x64-vbox43
         box_url: 'http://box.puphpet.com/ubuntu-precise12042-x64-vbox43.box'
-        hostname: null
+        hostname: phpfinansist.dev
         network:
             private_network: 192.168.56.101
             forwarded_port:
