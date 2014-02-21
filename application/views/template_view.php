@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">   
     <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="/phpfinansist/css/style.css"> 
+	<link rel="stylesheet" href="<?=MAINPAGE?>/css/style.css"> 
     <title>Главная</title>
 </head>
 <body>

@@ -50,4 +50,4 @@
 
 </form>
 <a href="user">назад</a>
-<br><a href="/phpfinansist/operation/report">отчет</a>
+<br><a href="<?=MAINPAGE?>/operation/report">отчет</a>
