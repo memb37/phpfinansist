@@ -1,6 +1,6 @@
 <?php
 $hostname = "localhost";	//Имя сервера
-$username = "root";			//Имя пользователя
-$password = "";				//Пароль пользователя
-$dbName = "MyFinDB";		//Имя базы данных
+$username = "phpfinansist";			//Имя пользователя
+$password = "phpfinansist";				//Пароль пользователя
+$dbName = "phpfinansist_dev";		//Имя базы данных
 ?>
