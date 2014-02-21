@@ -24,4 +24,3 @@
 	</td>
 </tr>
 </table>
-<a href="../user">назад</a>

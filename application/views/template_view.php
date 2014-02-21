@@ -31,10 +31,10 @@
  	<div class="row">				<!-- LEFT NAVBAR-->
 		<div class="col-md-1 col-md-offset-2 left-menu">
 			<ul class="nav nav-list">
-    			<li><a href="#">Домой</a></li>
-    			<li><a href="#">Операции</a></li>
-    			<li><a href="#">Отчет</a></li>
-    			<li><a href="#">Категории</a></li>
+    			<li><a href="<?=MAINPAGE?>">Домой</a></li>
+    			<li><a href="<?=MAINPAGE?>/user">Операции</a></li>
+    			<li><a href="<?=MAINPAGE?>/operation/report">Отчет</a></li>
+    			<li><a href="<?=MAINPAGE?>/category">Категории</a></li>
 			</ul>
 		</div>
 		<div class="col-md-6  text-center content">		<!-- CONTENT-->

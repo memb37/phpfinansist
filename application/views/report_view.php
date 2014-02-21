@@ -47,4 +47,3 @@
 по <input name="date_to" size = "10" value=<?=$_POST['date_to']?> type="text">
 <input type=submit value=показать>
 </form>
-<a href="../user">назад</a>

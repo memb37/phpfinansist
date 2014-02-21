@@ -64,4 +64,3 @@ endif?>
 </tr>
 </table>
 </form>
-<a href="user">назад</a>

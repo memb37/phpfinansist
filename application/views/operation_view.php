@@ -50,4 +50,3 @@
 
 </form>
 <a href="user">назад</a>
-<br><a href="<?=MAINPAGE?>/operation/report">отчет</a>

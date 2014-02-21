@@ -12,5 +12,3 @@ if ($data)
 }
 
 ?>
-<a href="category">редактировать категории</a><br>
-<a href="operation/report">отчет</a>
