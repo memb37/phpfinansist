@@ -1,0 +1,19 @@
+--- 
+db1: 
+  name: phpfinansist_staging
+  type: mysql
+global: 
+  env: 
+    - 
+      ENV: staging
+web1: 
+  after_build: 
+    - "cp config.php.pagodabox config.php"
+  before_deploy: 
+    - "php scripts/createdb.php"
+  name: phpfinansist-staginig
+  php_extensions: 
+    - mysqli
+    - pdo_mysql
+    - mysql
+  php_version: "5.4.14"

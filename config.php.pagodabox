@@ -1,0 +1,6 @@
+<?
+$hostname = "{$_SERVER['DB1_HOST']}:{$_SERVER['DB1_PORT']}";
+$username = $_SERVER["DB1_USER"];
+$password = $_SERVER["DB1_PASS"];
+$dbName = $_SERVER["DB1_NAME"];
+
