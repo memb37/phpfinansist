@@ -50,21 +50,21 @@ function action_profile()
 }
 function action_register() 
 {	
+	$data = null;
 	if (isset($_POST['submit_reg']))
 	{
 	$this->model = new Model_User();
-	global $db;
-		$err = array();
+	
     # проверям логин
 
     if(!preg_match("/^[a-zA-Z0-9]+$/",$_POST['login']))
     {
-        $err[] = "Логин может состоять только из букв английского алфавита и цифр";
+        $data = array("message" => "Логин может состоять только из букв английского алфавита и цифр");
     }
 
     if(strlen($_POST['login']) < 3 or strlen($_POST['login']) > 30)
     {
-        $err[] = "Логин должен быть не меньше 3-х символов и не больше 30";
+        $data = array("message" => "Логин должен быть не меньше 3-х символов и не больше 30");
     }
   
 	
@@ -72,28 +72,20 @@ function action_register()
 	
     if($this->model->login_free())
     {
-        $err[] = "Пользователь с таким логином уже существует в базе данных";
+        $data = array("message" => "Пользователь с таким логином уже существует в базе данных");
     }
 
-    if(count($err) == 0)
+    if(!$data)
     {
         $this->model->add_user();
 
         header("Location: ".MAINPAGE.""); exit();
     }
 
-    else
-    {
-        print "<b>При регистрации произошли следующие ошибки:</b><br>";
-       
-		foreach($err AS $error)
-        {
-            print $error."<br>";
-        }
-    }
-	
-}
 
-		$this->view->generate('register_view.php', 'template_view.php');
+	
+	}
+
+		$this->view->generate('register_view.php', 'template_view.php', $data);
 }
 }

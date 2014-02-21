@@ -13,8 +13,8 @@
      <div class="blog-masthead">	<!-- TOP NAVBAR-->
       <div class="container">
         <nav class="blog-nav text-right">
-          <a class="blog-nav-item" href="#">Профиль</a>
-          <a class="blog-nav-item" href="#">Выход</a>
+          <a class="blog-nav-item" href="<?=MAINPAGE?>/user/profile">Профиль</a>
+          <a class="blog-nav-item" href="<?=MAINPAGE?>/user/logout">Выход</a>
         </nav>
       </div>
     </div>

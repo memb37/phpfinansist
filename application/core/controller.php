@@ -11,10 +11,7 @@ class Controller {
 		global $db;
 		if(isset($_SESSION['user_id']))
 		{   
-				echo "<form method=\"POST\" action=\"".MAINPAGE."/user/logout\">
-					<input type=\"submit\" name=\"logout\"  value = \"Выход\">
-				</form>";
-				echo "<a href= \"".MAINPAGE."/user/profile\">Профиль</a>";
+
 		}
 		else {header("Location: ".MAINPAGE."/user/login"); exit();};
 	}
