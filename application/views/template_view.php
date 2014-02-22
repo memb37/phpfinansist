@@ -10,20 +10,36 @@
     <title>Главная</title>
 </head>
 <body>
-     <div class="blog-masthead">	<!-- TOP NAVBAR-->
-      <div class="container">
+     <!--<div class="blog-masthead">	<!-- TOP NAVBAR-->
+   <!--   <div class="container">
         <nav class="blog-nav text-right">
           <a class="blog-nav-item" href="<?=MAINPAGE?>/user/profile">Профиль</a>
           <a class="blog-nav-item" href="<?=MAINPAGE?>/user/logout">Выход</a>
         </nav>
       </div>
-    </div>
+    </div> -->
+
+	<div class="navbar navbar-fixed-top mynavbar" role="navigation">
+		<div class="container mynavbar-item">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="<?=MAINPAGE?>">phpfinansist</a>
+			</div>
+			<div class="navbar-collapse collapse navbar-right">
+				<p class="navbar-text">
+					<a href="<?=MAINPAGE?>/user/profile" class="navbar-link mynavbar-item">Профиль</a>
+				</p>
+				<p class="navbar-text">
+					<a href="<?=MAINPAGE?>/user/logout" class="navbar-link mynavbar-item">Выход</a>
+				</p>
+			</div><!--/.navbar-collapse -->
+		</div>
+	</div>
 
 
 	<div class="container"> 			<!--  HEADER-->
 		<div class="row">
 			<div class="col-md-12 text-center page-header">
-				<h1>phpfinansist</h1>
+				<h1></h1>
 			</div>
 		</div>
 	</div>
