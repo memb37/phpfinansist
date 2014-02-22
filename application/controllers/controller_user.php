@@ -1,16 +1,21 @@
 <?php
+require 'application/models/model_user.php';
+
+
 class Controller_User extends Controller
-{
-    function __construct()
-    {
-        
-        $this->view = new View();
+{    
+    protected function check_auth($action) {
+	if(in_array($action, array('action_login', 'action_register'))) {
+	    return;
+	}
+	parent::check_auth($action);
     }
+    
 function action_index()
 {
 	$this->model = new Model_User();
 	$data = $this->model->get_operations();
-    $this->view->generate('lk_view.php', 'template_view.php', $data);
+    $this->view->generate('lk_view.php', $data);
 }
 function action_login() 
 {	
@@ -25,28 +30,28 @@ function action_login()
 		{  
 			$_SESSION['user_id'] = $data['user_id'];
 			$_SESSION['user_name'] = $data['user_name'];
-			header("Location: ".MAINPAGE); exit();
+			header("Location: " . BASE_URL); exit();
     	} 
 		else 
 		{ 
     	    $data = array("message" => "Неверный логин или пароль") ;	
     	}
 	}
-	$this->view->generate('login_view.php', 'template_view.php', $data);
+	$this->view->generate('login_view.php', $data);
 }
 
 
 function action_logout()
 {
 		session_destroy();
-    	header("Location: ".MAINPAGE); exit();
+    	header("Location: " . BASE_URL); exit();
 }
 
 function action_profile()
 {
 		$this->model = new Model_User();
         $data = $this->model->get_data();		
-        $this->view->generate('profile_view.php', 'template_view.php', $data);
+        $this->view->generate('profile_view.php', $data);
 }
 function action_register() 
 {	
@@ -79,13 +84,13 @@ function action_register()
     {
         $this->model->add_user();
 
-        header("Location: ".MAINPAGE.""); exit();
+        header("Location: " . BASE_URL); exit();
     }
 
 
 	
 	}
 
-		$this->view->generate('register_view.php', 'template_view.php', $data);
+		$this->view->generate('register_view.php', $data);
 }
 }

@@ -1,47 +1,48 @@
 <?php
 class Model_Operation extends Model
 {
+	public function get_data() {
 		
-	public function get_data()
-    {
-		
-		global $db;$op_type=1;
-		if (isset($_POST['outgo'])) {$op_type=1;}
-			else if (isset($_POST['income'])) {$op_type=2;}
-				
+		global $db;
+		$op_type = isset($_POST['outgo']) ? 1 : 2;
+		$data = array();
+		$data['optype'] = $op_type;
 		try
 		{
-			$stmt = $db->prepare("SELECT category_id, category_name FROM categories 
-									WHERE category_type_id = :op_type AND (user_id = :user_id OR user_id = 777)
-									ORDER BY category_name");
-			$stmt->bindParam(':op_type', $op_type);
+			$stmt = $db->prepare("SELECT category_id, category_name
+				FROM categories 
+				WHERE user_id = :user_id 
+				ORDER BY category_name");
 			$stmt->bindParam(':user_id', $_SESSION['user_id']);
-			$stmt->execute(); 
-			while ($row = $stmt->fetch())
-				{$data[] = $row;}
-			return ($data);
-			
-		
-			
+			$stmt->execute(); 			
 		}
-
 		catch (PDOException $e) 
 		{
 			echo $e->getMessage();
 		}
-	
+		while ($row = $stmt->fetch()) {
+			$data['categories'][] = $row;
+		}
+		return $data;	
 	}
 
 	
-	public function add_data()
-    {
+	public function add_data() {
 		global $db;
-	
+		if($_POST['optype'] == 1) {
+			$_POST['summ'] = -1 * $_POST['summ'];
+		}
 		try
 		{
-		$stmt = $db->prepare("INSERT INTO operations (user_id, category_id, summ, date, comment) 
-									VALUES (:id, :cat_id, :summ, :dt, :comm)");
-		$data = array('id' => $_SESSION['user_id'], 'cat_id' => $_POST['cat_id'], 'summ' => $_POST['summ'], 'dt' => $_POST['date'], 'comm' => $_POST['comment']);
+			$stmt = $db->prepare("INSERT INTO operations
+				(user_id, category_id, summ, date, comment) 
+				VALUES (:id, :cat_id, :summ, :dt, :comm)");
+		$data = array(
+			'id' => $_SESSION['user_id'],
+			'cat_id' => $_POST['cat_id'],
+			'summ' => $_POST['summ'],
+			'dt' => $_POST['date'],
+			'comm' => $_POST['comment']);
 		$stmt->execute($data);
 		}
 
@@ -59,11 +60,14 @@ class Model_Operation extends Model
 		if (!isset($_POST['date_to']))
 			{$_POST['date_to']=date('Y-m-d');}
 
-		$stmt = $db->prepare("SELECT operation_id, date, category_name, summ, category_type_name, comment from operations 
-		INNER JOIN categories USING(category_id) 
-		INNER JOIN category_type USING(category_type_id) 
-		WHERE (operations.user_id = :id) AND (date BETWEEN :date_from AND :date_to)
-		ORDER BY date DESC, operation_id DESC ");
+		$stmt = $db->prepare("SELECT operation_id, date, category_name,
+			summ,  comment
+			from operations 
+			INNER JOIN categories USING(category_id) 
+			
+			WHERE operations.user_id = :id
+				AND date BETWEEN :date_from AND :date_to
+			ORDER BY date DESC, operation_id DESC ");
 		$stmt->bindParam(':id', $_SESSION['user_id']); 
 		if (isset($_POST['date_from']) and isset($_POST['date_to']))		
 		{

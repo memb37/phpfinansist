@@ -1,9 +1,10 @@
 <?php
 class View
 {
+    public $template = 'template_view.php';
   
-    function generate($content_view, $template_view, $data = null)
+    function generate($content_view, $data = null)
     {
-        include 'application/views/'.$template_view;
+        include 'application/views/'.$this->template;
     }
 }
