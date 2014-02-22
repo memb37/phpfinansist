@@ -1,4 +1,7 @@
 <?php
+
+require 'application/models/model_operation.php';
+
 class Controller_Operation extends Controller
 {
 
