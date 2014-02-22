@@ -27,6 +27,6 @@ class Controller_Category extends Controller
 
 		else
 			{$data = $this->model->get_categories(1);}
-        $this->view->generate('category_view.php', 'template_view.php',$data);
+        $this->view->generate('category_view.php', $data);
     }
 }

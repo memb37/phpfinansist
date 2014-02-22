@@ -13,7 +13,7 @@ function action_index()
 {
 	$this->model = new Model_User();
 	$data = $this->model->get_operations();
-    $this->view->generate('lk_view.php', 'template_view.php', $data);
+    $this->view->generate('lk_view.php', $data);
 }
 function action_login() 
 {	
@@ -35,7 +35,7 @@ function action_login()
     	    $data = array("message" => "Неверный логин или пароль") ;	
     	}
 	}
-	$this->view->generate('login_view.php', 'template_view.php', $data);
+	$this->view->generate('login_view.php', $data);
 }
 
 
@@ -49,7 +49,7 @@ function action_profile()
 {
 		$this->model = new Model_User();
         $data = $this->model->get_data();		
-        $this->view->generate('profile_view.php', 'template_view.php', $data);
+        $this->view->generate('profile_view.php', $data);
 }
 function action_register() 
 {	
@@ -89,6 +89,6 @@ function action_register()
 	
 	}
 
-		$this->view->generate('register_view.php', 'template_view.php', $data);
+		$this->view->generate('register_view.php', $data);
 }
 }
