@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', 1);
-include "config.php";
+require "config.php";
 
 		try
 		{
