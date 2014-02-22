@@ -1,49 +1,43 @@
-<table border=1 cellpadding=3>
-<tr>
-	<td>
-		id
-	</td>
-	<td>
-		дата и время
-	</td>
-	<td>
-		категория
-	</td>
-	<td>
-		сумма
-	</td>
-	<td>
-		расход/доход
-	</td>
-	<td>
-		комментарий
-	</td>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th style="width: 8%">id</th>
+			<th style="width: 12%">дата и время</th>
+			<th style="width: 17%">категория</th>
+			<th style="width: 10%">сумма</th>
+			<th style="width: 15%">расход/доход</th>
+			<th style="width: 30%">комментарий</th>
+		</tr>
+	</thead>
+
+	<tbody> 
 <?if (isset($data)):?>
 <?foreach ($data as $d):?>
-<tr>
-	<td>
-		<?=$d['operation_id']?>
-	</td>
-	<td>
-		<?=$d['date']?>
-	</td>
-	<td>
-		<?=$d['category_name']?>
-	</td>
-	<td>
-		<?=$d['summ']?>
-	</td>
-	<td>
-		<?=$d['category_type_name']?>
-	</td>
-	<td>
-		<?=$d['comment']?>
-	</td>
+		<tr class="text-left">
+			<td><?=$d['operation_id']?></td>
+			<td><?=$d['date']?></td>
+			<td><?=$d['category_name']?></td>
+			<td><?=$d['summ']?></td>
+			<td><?=$d['category_type_name']?></td>
+			<td><?=$d['comment']?></td>
 <?endforeach?>
 <?endif?>
+	</tbody>
 </table>
-<form method="POST">
-С <input name="date_from" size = "10" value=<?=$_POST['date_from']?> type="text">
-по <input name="date_to" size = "10" value=<?=$_POST['date_to']?> type="text">
-<input type=submit value=показать>
+
+<form class="form-inline" role="form" method="POST">
+<fieldset>
+	<div class="form-group">
+		<input name="date_from" type="date" class="form-control" value=<?=$_POST['date_from']?>>
+	</div>
+	<div class="form-group">
+		<input name="date_to" type="date" class="form-control" id="date to" value=<?=$_POST['date_to']?>>
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-default form-control" id="show">показать</button>
+	</div>
+</fieldset>
 </form>
+
+
+
