@@ -1,63 +1,71 @@
 <?php
 class Model_Category extends Model
 {
-	public function get_categories($category_type_id)
-	{
+	public $id;
+	public $name;
+	public $user_id;
+	
+	public function __construct($id = null) {
 		global $db;
-		$stmt = $db->prepare("SELECT category_id, category_name, category_type_id, category_type_name  
-							FROM categories INNER JOIN category_type USING (category_type_id) 
-							WHERE (user_id = :user_id OR user_id = 777) AND category_type_id = :ct_id ORDER BY category_name");
-		$stmt->bindParam(':user_id', $_SESSION['user_id']);
-		$stmt->bindParam(':ct_id', $category_type_id);
-		$stmt->execute(); 
-		while ($row = $stmt->fetch())
-			{$data[] = $row;}
-		return ($data);
+		if($id) {
+		$stmt = $db->prepare('select category_id, category_name, user_id
+			from categories
+			where category_id=:id');
+			$stmt->bindParam(':id', $id);
+			$stmt->execute();
+			$row = $stmt->fetch();
+
+			if($row) {
+				$this->id = $row['category_id'];
+				$this->name = $row['category_name'];
+				$this->user_id = $row['user_id'];
+			}
+		}
 	}
 	
-		public function add_category()
-		{
-			global $db;
-			if ($_POST['category_name']=="")
-			{
-				$_SESSION['error'] = "Название категории не может быть пустым";
-			}
-			else
-			{
-				$stmt = $db->prepare("INSERT INTO categories (user_id, category_type_id, category_name) 
-									VALUES (:user_id, :category_type_id, :category_name)");
-				$data = array('user_id' => $_SESSION['user_id'], 'category_type_id' => $_POST['category_type_id'], 
-							'category_name' => $_POST['category_name']);
-				$stmt->execute($data);
-			}
+	
+	public static function find_all($user_id) {
+		global $db;
+		$stmt = $db->prepare('select category_id, category_name
+			from categories
+			where user_id=:user_id
+			order by 2 asc');
+		$stmt->bindParam(':user_id', $user_id);
+		$stmt->execute();
+		$result = array();
+		while($row = $stmt->fetch()) {
+			$c = new Model_Category();
+			$c->id = $row['category_id'];
+			$c->name = $row['category_name'];
+			$result[] = $c;	
 		}
-
-		public function delete_category()
-		{
-			global $db;
-			$stmt=$db->prepare("DELETE FROM categories WHERE category_id = :category_id AND user_id = :user_id");
-			$stmt->bindParam(':category_id', $_POST['category_id']);
-			$stmt->bindParam(':user_id', $_SESSION['user_id']);
-			$stmt->execute();
+		return $result;
+	}
+	
+	public function save() {
+		global $db;
+		if($this->id) {
+			$stmt=$db->prepare("UPDATE categories
+				SET category_name = :category_name
+				WHERE category_id = :category_id AND user_id = :user_id");
+			$stmt->bindParam(':category_name', $this->name);			
+			$stmt->bindParam(':category_id', $this->id);
+			$stmt->bindParam(':user_id', $this->user_id);		
+		} else {
+			$stmt = $db->prepare("INSERT INTO categories (user_id, category_name) 
+				VALUES (:user_id, :category_name)");
+			$stmt->bindParam(':category_name', $this->name);			
+			$stmt->bindParam(':user_id', $this->user_id);
 		}
-
-		public function edit_category()
-		{
-			global $db;
-			if ($_POST[$_POST['category_id']]=="")
-			{
-				$_SESSION['error'] = "Название категории не может быть пустым";
-			}
-			else
-			{
-				$stmt=$db->prepare("UPDATE categories SET category_name = :category_name 
-								WHERE category_id = :category_id AND user_id = :user_id");
-				$stmt->bindParam(':category_name', $_POST[$_POST['category_id']]);			
-				$stmt->bindParam(':category_id', $_POST['category_id']);
-				$stmt->bindParam(':user_id', $_SESSION['user_id']);
-				$stmt->execute();
-			}
-		}
+		$stmt->execute();
+	}
+	
+	public function delete() {
+		global $db;
+		$stmt = $db->prepare("DELETE FROM categories
+			WHERE category_id = :category_id AND user_id = :user_id");
+		$stmt->bindParam(':category_id', $this->id);
+		$stmt->bindParam(':user_id', $this->user_id);
+		$stmt->execute();
+	}
 }
-
-?>

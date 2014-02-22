@@ -18,7 +18,7 @@
 			<td><?=$d['date']?></td>
 			<td><?=$d['category_name']?></td>
 			<td><?=$d['summ']?></td>
-			<td><?=$d['category_type_name']?></td>
+			<td></td>
 			<td><?=$d['comment']?></td>
 <?endforeach?>
 <?endif?>

@@ -1,4 +1,5 @@
 <form method="POST">
+	<input type=hidden name=optype value="<?=$data['optype']?>">
 <table border = "1" align="center">
 <tr height="30">
 	<td colspan="2">
@@ -11,7 +12,7 @@
 	</td>
 	<td>
 		<select name="cat_id">
-			<? foreach ($data as $d)
+			<? foreach ($data['categories'] as $d)
 				{echo "<option value={$d['category_id']}>{$d['category_name']}</option>";} 
 			?>
 		</select>		
