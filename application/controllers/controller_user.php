@@ -3,12 +3,14 @@ require 'application/models/model_user.php';
 
 
 class Controller_User extends Controller
-{
-    function __construct()
-    {
-        
-        $this->view = new View();
+{    
+    protected function check_auth($action) {
+	if(in_array($action, array('action_login', 'action_register'))) {
+	    return;
+	}
+	parent::check_auth($action);
     }
+    
 function action_index()
 {
 	$this->model = new Model_User();

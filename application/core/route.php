@@ -48,9 +48,9 @@ class Route
         $action = $action_name;
         
         if(method_exists($controller, $action))
-        {	if ($action!="action_login" && $action!="action_register") {$controller->auth();}
+        {
             // вызываем действие контроллера
-            $controller->$action();
+            $controller->exec_action($action);
         }
         else
         {
