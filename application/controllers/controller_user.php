@@ -25,7 +25,7 @@ function action_login()
 		{  
 			$_SESSION['user_id'] = $data['user_id'];
 			$_SESSION['user_name'] = $data['user_name'];
-			header("Location: ".MAINPAGE); exit();
+			header("Location: " . BASE_URL); exit();
     	} 
 		else 
 		{ 
@@ -39,7 +39,7 @@ function action_login()
 function action_logout()
 {
 		session_destroy();
-    	header("Location: ".MAINPAGE); exit();
+    	header("Location: " . BASE_URL); exit();
 }
 
 function action_profile()
@@ -79,7 +79,7 @@ function action_register()
     {
         $this->model->add_user();
 
-        header("Location: ".MAINPAGE.""); exit();
+        header("Location: " . BASE_URL); exit();
     }
 
 

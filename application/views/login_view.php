@@ -8,7 +8,7 @@
 		<input type="password" name="password" required class="form-control" id="InputPassword" placeholder="Password">
 	</div>
 	<button type="submit" class="btn btn-primary">Войти</button>
-	<a href =" <?=MAINPAGE?>/user/register">Регистрация</a>
+	<a href ="user/register">Регистрация</a>
 	<? if(!empty($data['message'])) : ?>
 		<p><?=$data['message']?>
 	<? endif; ?>

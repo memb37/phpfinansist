@@ -14,21 +14,6 @@ require "config.php";
 			echo "Не могу подключиться к БД " . $e->getMessage();
 		}
 
-$s = explode("/", $_SERVER['SCRIPT_NAME']);
-$mp = ""; $depth = 0;
-for ($i = 1; $i < count($s)-1; $i++)
-{
-	$mp.="/".$s[$i];
-	$depth++;
-}
-
-$mp="http://".$_SERVER['HTTP_HOST'].$mp;
-define("MAINPAGE", $mp); define("DEPTH", $depth);
+define("BASE_URL", "http://{$_SERVER['HTTP_HOST']}" . dirname($_SERVER["SCRIPT_NAME"]));
 
 require_once 'application/bootstrap.php';
-
-
-
-
-
-

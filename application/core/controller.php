@@ -13,7 +13,7 @@ class Controller {
 		{   
 
 		}
-		else {header("Location: ".MAINPAGE."/user/login"); exit();};
+		else {header("Location: " . BASE_URL . "/user/login"); exit();};
 	}
     function __construct()
     {
