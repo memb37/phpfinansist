@@ -25,12 +25,14 @@
 				<a class="navbar-brand" href="<?=MAINPAGE?>">phpfinansist</a>
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
+				<? if(isset($_SESSION['user_id'])): ?>
 				<p class="navbar-text">
 					<a href="<?=MAINPAGE?>/user/profile" class="navbar-link mynavbar-item">Профиль</a>
 				</p>
 				<p class="navbar-text">
 					<a href="<?=MAINPAGE?>/user/logout" class="navbar-link mynavbar-item">Выход</a>
 				</p>
+				<? endif; ?>
 			</div><!--/.navbar-collapse -->
 		</div>
 	</div>
@@ -47,10 +49,12 @@
  	<div class="row">				<!-- LEFT NAVBAR-->
 		<div class="col-md-1 col-md-offset-2 left-menu">
 			<ul class="nav nav-list">
+				<? if(isset($_SESSION['user_id'])): ?>
     			<li><a href="<?=MAINPAGE?>">Домой</a></li>
     			<li><a href="<?=MAINPAGE?>/user">Операции</a></li>
     			<li><a href="<?=MAINPAGE?>/operation/report">Отчет</a></li>
     			<li><a href="<?=MAINPAGE?>/category">Категории</a></li>
+				<? endif; ?>
 			</ul>
 		</div>
 		<div class="col-md-6  text-center content">		<!-- CONTENT-->
