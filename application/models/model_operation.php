@@ -63,7 +63,7 @@ class Model_Operation extends Model
 		$stmt = $db->prepare("SELECT operation_id, date, category_name,
 			summ,  comment
 			from operations 
-			INNER JOIN categories USING(category_id) 
+			LEFT JOIN categories USING(category_id)
 			
 			WHERE operations.user_id = :id
 				AND date BETWEEN :date_from AND :date_to
