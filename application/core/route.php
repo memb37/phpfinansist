@@ -2,7 +2,7 @@
 class Route
 {
     static function start()
-    {	session_start();
+    {	
         // контроллер и действие по умолчанию
         $controller_name = 'Main';
         $action_name = 'index';
