@@ -7,7 +7,8 @@ class Route
         $controller_name = 'Main';
         $action_name = 'index';
         $_parsed = parse_url(BASE_URL);
-        $request_uri = (string)substr($_SERVER["REQUEST_URI"], strlen($_parsed['path']));
+        $exploded = explode('?', $_SERVER["REQUEST_URI"]);
+        $request_uri = (string)substr($exploded[0], strlen($_parsed['path']));
         $routes = explode('/', trim($request_uri, '/'));
 
         // получаем имя контроллера
