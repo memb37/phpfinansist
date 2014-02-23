@@ -23,7 +23,9 @@
 	<div class="navbar navbar-fixed-top mynavbar" role="navigation">
 		<div class="container mynavbar-item">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="<?=BASE_URL?>">phpfinansist</a>
+				<a class="navbar-brand" href="<?=BASE_URL?>">
+				<img src="images/phpfinansist_logo_plain.svg">
+				phpfinansist</a>
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 				<? if(isset($_SESSION['user_id'])): ?>
