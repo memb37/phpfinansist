@@ -32,6 +32,7 @@ class Model_Operation extends Model
 		if($_POST['optype'] == 1) {
 			$_POST['summ'] = -1 * $_POST['summ'];
 		}
+        $_POST['cat_id'] = isset($_POST['cat_id']) ? $_POST['cat_id'] :NULL;
 		try
 		{
 			$stmt = $db->prepare("INSERT INTO operations
