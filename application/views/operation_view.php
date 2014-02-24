@@ -12,8 +12,10 @@
 	</td>
 	<td>
 		<select name="cat_id">
-			<? foreach ($data['categories'] as $d)
-				{echo "<option value={$d['category_id']}>{$d['category_name']}</option>";} 
+			<?  if (!empty($data['categories'])):
+                    foreach ($data['categories'] as $d)
+				        {echo "<option value={$d['category_id']}>{$d['category_name']}</option>";}
+                endif;
 			?>
 		</select>		
 	</td>
