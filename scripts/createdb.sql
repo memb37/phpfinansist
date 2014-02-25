@@ -31,7 +31,7 @@ CREATE TABLE `operations` (
   `operation_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `summ` int(20) NOT NULL,
+  `summ` double NOT NULL,
   `date` date NOT NULL,
   `comment` text NOT NULL,
   PRIMARY KEY (`operation_id`),
