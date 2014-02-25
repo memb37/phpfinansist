@@ -16,9 +16,11 @@
 		<tr class="text-left">
 			<td><?=$d['operation_id']?></td>
 			<td><?=$d['date']?></td>
-			<td><?=$d['category_name']?></td>
+			<td>
+                <?=($d['category_name'] ? : "без категории")?>
+            </td>
 			<td><?=$d['summ']?></td>
-			<td></td>
+			<td><?=($d['summ']>0)? "доход" :"расход"?></td>
 			<td><?=$d['comment']?></td>
 <?endforeach?>
 <?endif?>

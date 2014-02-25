@@ -6,7 +6,8 @@ class Model_Operation extends Model
 		global $db;
 		$op_type = isset($_POST['outgo']) ? 1 : 2;
 		$data = array();
-		$data['optype'] = $op_type;
+        $data['categories'] = array();
+        $data['optype'] = $op_type;
 		try
 		{
 			$stmt = $db->prepare("SELECT category_id, category_name
@@ -32,6 +33,7 @@ class Model_Operation extends Model
 		if($_POST['optype'] == 1) {
 			$_POST['summ'] = -1 * $_POST['summ'];
 		}
+        $_POST['cat_id'] = !empty($_POST['cat_id']) ? $_POST['cat_id'] :NULL;
 		try
 		{
 			$stmt = $db->prepare("INSERT INTO operations
@@ -63,7 +65,7 @@ class Model_Operation extends Model
 		$stmt = $db->prepare("SELECT operation_id, date, category_name,
 			summ,  comment
 			from operations 
-			INNER JOIN categories USING(category_id) 
+			LEFT JOIN categories USING(category_id)
 			
 			WHERE operations.user_id = :id
 				AND date BETWEEN :date_from AND :date_to
