@@ -74,6 +74,7 @@ apache:
                 - 'APP_ENV dev'
             override:
                 - All
+            custom_fragment: "EnableSendfile Off\n"                
     user: www-data
     group: www-data
     default_vhost: true
@@ -124,7 +125,7 @@ mysql:
             host: localhost
             user: phpfinansist
             password: phpfinansist
-            sql_file: /vagrant/MyFinDB.sql
+            sql_file: /vagrant/scripts/createdb.sql
 mongodb:
     install: 0
     auth: 1
