@@ -6,7 +6,8 @@ class Model_Operation extends Model
 		global $db;
 		$op_type = isset($_POST['outgo']) ? 1 : 2;
 		$data = array();
-		$data['optype'] = $op_type;
+        $data['categories'] = array();
+        $data['optype'] = $op_type;
 		try
 		{
 			$stmt = $db->prepare("SELECT category_id, category_name

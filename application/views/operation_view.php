@@ -13,11 +13,9 @@
 	<td>
 		<select name="cat_id">
             <option value>без категории</option>>
-			<?  if (!empty($data['categories'])):
-                    foreach ($data['categories'] as $d)
-				        {echo "<option value={$d['category_id']}>{$d['category_name']}</option>";}
-                endif;
-			?>
+			<?foreach ($data['categories'] as $d):?>
+			    <option value=<?=$d['category_id']?>><?=$d['category_name']?></option>
+             <?endforeach?>
 		</select>		
 	</td>
 </tr>
