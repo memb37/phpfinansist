@@ -18,13 +18,7 @@
 			<td><?=$d['date']?></td>
 			<td><?=$d['category_name']?></td>
 			<td><?=$d['summ']?></td>
-			<td>
-                <?if($d['summ']>0)
-                    {echo "доход";}
-                elseif ($d['summ']<0)
-                    {echo "расход";}
-                ?>
-			</td>
+			<td><?=($d['summ']>0)? "доход" :"расход"?></td>
 			<td><?=$d['comment']?></td>
 <?endforeach?>
 <?endif?>
