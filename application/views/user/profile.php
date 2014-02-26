@@ -9,14 +9,6 @@
 </tr>
 <tr>
 	<td>
-		Логин
-	</td>
-	<td>
-		<?=$data['user']->login?>
-	</td>
-</tr>
-<tr>
-	<td>
 		email
 	</td>
 	<td>

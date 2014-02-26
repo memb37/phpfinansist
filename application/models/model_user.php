@@ -3,14 +3,13 @@
 class Model_User extends Model {
     public $id;
     public $name;
-    public $login;
     public $email;
     public $password;
 
-    public function __construct($id = null, $login = null) {
+    public function __construct($id = null, $email = null) {
         global $db;
         if($id) {
-            $stmt = $db->prepare("SELECT `user_id` ,`user_name`, `login`, `email`
+            $stmt = $db->prepare("SELECT `user_id` ,`user_name`, `email`
                                 FROM users WHERE user_id= :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -18,14 +17,13 @@ class Model_User extends Model {
             if($row) {
                 $this->id = $row['user_id'];
                 $this->name = $row['user_name'];
-                $this->login = $row['login'];
                 $this->email = $row['email'];
             }
         }
-        if($login) {
+        if($email) {
             $stmt = $db->prepare("SELECT user_id, user_name, password
-                                FROM users WHERE login = :login LIMIT 1");
-            $stmt->bindParam(':login', $login);
+                                FROM users WHERE email = :email LIMIT 1");
+            $stmt->bindParam(':email', $email);
             $stmt->execute();
             $row = $stmt->fetch();
             if($row) {
@@ -45,7 +43,7 @@ class Model_User extends Model {
         }
     }
     public function create() {
-        if($this->login_isset()) {
+        if($this->email_isset()) {
             return array("message" => "Пользователь с таким логином уже существует в базе данных");
         }
         $this->save();
@@ -53,18 +51,11 @@ class Model_User extends Model {
 
     public function save() {
         global $db;
-        if(!preg_match("/^[a-zA-Z0-9]+$/", $this->login)) {
-            return array("message" => "Логин может состоять только из букв английского алфавита и цифр");
-        }
-
-        if(strlen($this->login) < 3 or strlen($this->login) > 30) {
-            return array("message" => "Логин должен быть не меньше 3-х символов и не больше 30");
-        }
 
         $this->password = md5(md5(trim($this->password)));
-        $stmt = $db->prepare("INSERT INTO users (login, password, user_name, email)
-                            VALUES (:login, :password, :user_name, :email)");
-        $data = array('login'     => $this->login, 'password' => $this->password,
+        $stmt = $db->prepare("INSERT INTO users (password, user_name, email)
+                            VALUES (:password, :user_name, :email)");
+        $data = array('password' => $this->password,
                       'user_name' => $this->name, 'email' => $this->email);
         $stmt->execute($data);
         if(empty($error)) {
@@ -73,10 +64,10 @@ class Model_User extends Model {
         }
     }
 
-    public function login_isset() {
+    public function email_isset() {
         global $db;
-        $stmt = $db->prepare("SELECT COUNT(user_id) as count FROM users WHERE login= :login");
-        $stmt->bindParam(':login', $this->login);
+        $stmt = $db->prepare("SELECT COUNT(user_id) as count FROM users WHERE email= :email");
+        $stmt->bindParam(':email', $this->email);
         $stmt->execute();
         $row = $stmt->fetch();
         return $row['count'];

@@ -1,7 +1,7 @@
 <form  method="POST"  class="form-inline" role="form">
 	<div class="form-group">
-		<label class="sr-only" for="InputLogin">Login</label>
-		<input name="login" required class="form-control" id="InputLogin" placeholder="Login">
+		<label class="sr-only" for="InputEmail">Email</label>
+		<input name="email" type="email" required class="form-control" id="InputEmail" placeholder="Email">
 	</div>
 	<div class="form-group">
 		<label class="sr-only" for="InputPassword">Password</label>

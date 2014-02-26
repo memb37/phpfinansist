@@ -18,7 +18,7 @@ class Controller_User extends Controller {
     public function action_login() {
         $error = array();
         if(!empty($_POST)) {
-            $user = new Model_User(null, $_POST['login']);
+            $user = new Model_User(null, $_POST['email']);
             $error = $user->check($_REQUEST['password']);
             if (!$error) {
                 header("Location: ".BASE_URL);
@@ -37,7 +37,6 @@ class Controller_User extends Controller {
         $error = array();
         if(!empty($_POST)) {
             $user = new Model_User();
-            $user->login = htmlspecialchars($_POST['login']);
             $user->password = htmlspecialchars($_POST['password']);
             $user->name = htmlspecialchars($_POST['name']);
             $user->email = htmlspecialchars($_POST['email']);
