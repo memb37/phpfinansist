@@ -17,7 +17,7 @@ class Controller_User extends Controller {
 
     public function action_login() {
         $error = array();
-        if(isset($_POST['login_button'])) {
+        if(!empty($_POST)) {
             $user = new Model_User(null, $_POST['login']);
             $error = $user->check($_REQUEST['password']);
             if (!$error) {
@@ -35,7 +35,7 @@ class Controller_User extends Controller {
 
     public function action_register() {
         $error = array();
-        if(isset($_POST['submit_reg'])) {
+        if(!empty($_POST)) {
             $user = new Model_User();
             $user->login = $_POST['login'];
             $user->password = $_POST['password'];
