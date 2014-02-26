@@ -4,7 +4,7 @@
 		Имя
 	</td>
 	<td>
-		<?=$data['user_name']?>
+		<?=$data['user']->name?>
 	</td>
 </tr>
 <tr>
@@ -12,7 +12,7 @@
 		Логин
 	</td>
 	<td>
-		<?=$data['login']?>
+		<?=$data['user']->login?>
 	</td>
 </tr>
 <tr>
@@ -20,7 +20,7 @@
 		email
 	</td>
 	<td>
-		<?=$data['email']?>
+		<?=$data['user']->email?>
 	</td>
 </tr>
 </table>

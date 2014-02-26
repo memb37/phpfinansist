@@ -7,7 +7,7 @@
 		<label class="sr-only" for="InputPassword">Password</label>
 		<input type="password" name="password" required class="form-control" id="InputPassword" placeholder="Password">
 	</div>
-	<button type="submit" class="btn btn-primary">Войти</button>
+	<button name="login_button" type="submit" class="btn btn-primary">Войти</button>
 	<a href ="user/register">Регистрация</a>
 	<? if(!empty($data['message'])) : ?>
 		<p><?=$data['message']?>

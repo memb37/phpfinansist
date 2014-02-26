@@ -1,98 +1,84 @@
 <?php
 
-class Model_User extends Model
-{
-	
-    public function get_data()
-    {	
-		global $db;
-		try
-		{
-			$stmt = $db->prepare("SELECT `user_name`, `login`, `email` FROM users WHERE user_id= :id");
-			$stmt->bindParam(':id', $_SESSION['user_id']);			
-			$stmt->execute();
-			$data = $stmt->fetch(); 
-			return ($data);
-		}
+class Model_User extends Model {
+    public $id;
+    public $name;
+    public $login;
+    public $email;
+    public $password;
 
-		catch(PDOException $e)
-		{
-			echo $e->getMessage();
-		}
+    public function __construct($id = null, $login = null) {
+        global $db;
+        if($id) {
+            $stmt = $db->prepare("SELECT `user_id` ,`user_name`, `login`, `email`
+                                FROM users WHERE user_id= :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $row = $stmt->fetch();
+            if($row) {
+                $this->id = $row['user_id'];
+                $this->name = $row['user_name'];
+                $this->login = $row['login'];
+                $this->email = $row['email'];
+            }
+        }
+        if($login) {
+            $stmt = $db->prepare("SELECT user_id, user_name, password
+                                FROM users WHERE login = :login LIMIT 1");
+            $stmt->bindParam(':login', $login);
+            $stmt->execute();
+            $row = $stmt->fetch();
+            if($row) {
+                $this->id = $row['user_id'];
+                $this->name = $row['user_name'];
+                $this->password = $row['password'];
+            }
+        }
     }
-	
-	public function get_user()
-	{
-		global $db;
-		try
-		{
-    		$stmt = $db->prepare("SELECT user_id, user_name, password FROM users WHERE login = :login LIMIT 1");
-			$stmt->bindParam(':login', $_POST['login']);
-			$stmt->execute();
-			$row = $stmt -> fetch(PDO::FETCH_ASSOC);
-		}
 
-		catch (PDOException $e) 
-		{
-			echo $e->getMessage();
-		}
-		return $row;
-	}
-	public function add_user()
-	{
-		global $db;
-		$password = md5(md5(trim($_POST['password'])));
-		try
-		{
-			$stmt = $db->prepare("INSERT INTO users (login, password, user_name, email) VALUES (:login, :password, :user_name, :email)");
-			$data = array('login' => $_POST['login'], 'password' => $password, 
-							'user_name' => $_POST['name'], 'email' => $_POST['email']);
-			$stmt->execute($data);			
-		} 
-       
-		catch (PDOException $e) 
-		{
-			echo $e->getMessage();
-		}
-	}
+    public function check($password) {
+        if($this->password === md5(md5($password))) {
+            $_SESSION['user_id'] = $this->id;
+            $_SESSION['user_name'] = $this->name;
+            header("Location: ".BASE_URL);
+            exit();
+        } else {
+            return array("message" => "Неверный логин или пароль");
+        }
+    }
 
-	public function login_free()
-	{
-		global $db;
-		try
-	{
-		$stmt = $db->prepare("SELECT COUNT(user_id) as count FROM users WHERE login= :login");
-		$stmt->bindParam(':login', $_POST['login']); 
-		$stmt->execute();
-		$row = $stmt->fetch();
-		return $row['count'];
-	}
+    public function save() {
+        global $db;
+        if(!preg_match("/^[a-zA-Z0-9]+$/", $_POST['login'])) {
+            return array("message" => "Логин может состоять только из букв английского алфавита и цифр");
+        }
 
-	catch (PDOException $e) 
-	{
-		echo $e->getMessage();
-	}
-	}
+        if(strlen($_POST['login']) < 3 or strlen($_POST['login']) > 30) {
+            return array("message" => "Логин должен быть не меньше 3-х символов и не больше 30");
+        }
 
-	public function get_operations()
-	{
-		try
-		{	
-			global $db; $data=null;
-			$stmt = $db->prepare("SELECT date, category_name, summ from operations
-			LEFT JOIN categories USING(category_id)
-			WHERE operations.user_id= :id ORDER BY date DESC, operation_id DESC LIMIT 0,10");
-			$stmt->bindParam(':id', $_SESSION['user_id']); 
-			$stmt->execute();
-			while ($row = $stmt->fetch())
-				{$data[] = $row;}
-			return ($data);
-		}
+        if($this->login_isset()) {
+            return array("message" => "Пользователь с таким логином уже существует в базе данных");
+        }
+        $this->password = md5(md5(trim($this->password)));
+        $stmt = $db->prepare("INSERT INTO users (login, password, user_name, email)
+                            VALUES (:login, :password, :user_name, :email)");
+        $data = array('login'     => $this->login, 'password' => $this->password,
+                      'user_name' => $this->name, 'email' => $this->email);
+        $stmt->execute($data);
+        if(empty($error)) {
+            header("Location: ".BASE_URL);
+            exit();
+        }
+    }
 
-		catch(PDOException $e)
-		{
-			echo $e->getMessage();
-		}
-	}
+    public function login_isset() {
+        global $db;
+        $stmt = $db->prepare("SELECT COUNT(user_id) as count FROM users WHERE login= :login");
+        $stmt->bindParam(':login', $this->login);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return $row['count'];
+
+    }
 }
-

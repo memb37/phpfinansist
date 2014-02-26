@@ -30,7 +30,7 @@
 			<div class="navbar-collapse collapse navbar-right">
 				<? if(isset($_SESSION['user_id'])): ?>
 				<p class="navbar-text">
-					<a href="user/profile" class="navbar-link mynavbar-item">Профиль</a>
+					<a href="user" class="navbar-link mynavbar-item">Профиль</a>
 				</p>
 				<p class="navbar-text">
 					<a href="user/logout" class="navbar-link mynavbar-item">Выход</a>
@@ -54,7 +54,7 @@
 			<ul class="nav nav-list">
 				<? if(isset($_SESSION['user_id'])): ?>
     			<li><a href="<?=BASE_URL?>">Домой</a></li>
-    			<li><a href="user">Операции</a></li>
+    			<li><a href="operation">Операции</a></li>
     			<li><a href="operation/report">Отчет</a></li>
     			<li><a href="category">Категории</a></li>
 				<? endif; ?>
