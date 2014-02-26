@@ -28,7 +28,7 @@
 				phpfinansist</a>
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
-				<? if(isset($_SESSION['user_id'])): ?>
+				<? if(isset($_SESSION['user'])): ?>
 				<p class="navbar-text">
 					<a href="user" class="navbar-link mynavbar-item">Профиль</a>
 				</p>
@@ -52,7 +52,7 @@
  	<div class="row">				<!-- LEFT NAVBAR-->
 		<div class="col-md-1 col-md-offset-2 left-menu">
 			<ul class="nav nav-list">
-				<? if(isset($_SESSION['user_id'])): ?>
+				<? if(isset($_SESSION['user'])): ?>
     			<li><a href="<?=BASE_URL?>">Домой</a></li>
     			<li><a href="operation">Операции</a></li>
     			<li><a href="operation/report">Отчет</a></li>

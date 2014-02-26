@@ -4,7 +4,7 @@ class Controller {
     public $view;
     
     protected function check_auth($action) {
-	if(empty($_SESSION['user_id'])) {
+	if(empty($_SESSION['user'])) {
 	    header("Location: " . BASE_URL . "/user/login");
 	    exit();
 	}

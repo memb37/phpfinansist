@@ -38,10 +38,8 @@ class Model_User extends Model {
 
     public function check($password) {
         if($this->password === md5(md5($password))) {
-            $_SESSION['user_id'] = $this->id;
-            $_SESSION['user_name'] = $this->name;
-            header("Location: ".BASE_URL);
-            exit();
+            $_SESSION['user'] = array('id'=>$this->id, 'name'=>$this->name);
+            return false;
         } else {
             return array("message" => "Неверный логин или пароль");
         }

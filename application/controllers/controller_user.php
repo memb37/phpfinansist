@@ -11,7 +11,7 @@ class Controller_User extends Controller {
     }
 
     public function action_index() {
-        $user = new Model_User($_SESSION['user_id']);
+        $user = new Model_User($_SESSION['user']['id']);
         $this->view->generate('user/profile.php', array('user' => $user));
     }
 
@@ -20,6 +20,9 @@ class Controller_User extends Controller {
         if(isset($_POST['login_button'])) {
             $user = new Model_User(null, $_POST['login']);
             $error = $user->check($_REQUEST['password']);
+            if (!$error) {
+                header("Location: ".BASE_URL);
+            }
         }
         $this->view->generate('user/login.php', $error);
     }
