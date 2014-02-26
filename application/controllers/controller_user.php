@@ -38,7 +38,7 @@ class Controller_User extends Controller {
             $user->password = $_POST['password'];
             $user->name = $_POST['name'];
             $user->email = $_POST['email'];
-            $error = $user->save();
+            $error = $user->create();
         }
         $this->view->generate('user/register.php', $error);
     }

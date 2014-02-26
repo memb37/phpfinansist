@@ -46,20 +46,23 @@ class Model_User extends Model {
             return array("message" => "Неверный логин или пароль");
         }
     }
-
-    public function save() {
-        global $db;
-        if(!preg_match("/^[a-zA-Z0-9]+$/", $_POST['login'])) {
-            return array("message" => "Логин может состоять только из букв английского алфавита и цифр");
-        }
-
-        if(strlen($_POST['login']) < 3 or strlen($_POST['login']) > 30) {
-            return array("message" => "Логин должен быть не меньше 3-х символов и не больше 30");
-        }
-
+    public function create() {
         if($this->login_isset()) {
             return array("message" => "Пользователь с таким логином уже существует в базе данных");
         }
+        $this->save();
+    }
+
+    public function save() {
+        global $db;
+        if(!preg_match("/^[a-zA-Z0-9]+$/", $this->login)) {
+            return array("message" => "Логин может состоять только из букв английского алфавита и цифр");
+        }
+
+        if(strlen($this->login) < 3 or strlen($this->login) > 30) {
+            return array("message" => "Логин должен быть не меньше 3-х символов и не больше 30");
+        }
+
         $this->password = md5(md5(trim($this->password)));
         $stmt = $db->prepare("INSERT INTO users (login, password, user_name, email)
                             VALUES (:login, :password, :user_name, :email)");
