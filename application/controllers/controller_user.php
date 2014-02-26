@@ -37,10 +37,10 @@ class Controller_User extends Controller {
         $error = array();
         if(!empty($_POST)) {
             $user = new Model_User();
-            $user->login = $_POST['login'];
-            $user->password = $_POST['password'];
-            $user->name = $_POST['name'];
-            $user->email = $_POST['email'];
+            $user->login = htmlspecialchars($_POST['login']);
+            $user->password = htmlspecialchars($_POST['password']);
+            $user->name = htmlspecialchars($_POST['name']);
+            $user->email = htmlspecialchars($_POST['email']);
             $error = $user->create();
         }
         $this->view->generate('user/register.php', $error);
