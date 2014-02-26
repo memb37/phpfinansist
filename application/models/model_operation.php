@@ -14,7 +14,7 @@ class Model_Operation extends Model
 				FROM categories 
 				WHERE user_id = :user_id 
 				ORDER BY category_name");
-			$stmt->bindParam(':user_id', $_SESSION['user_id']);
+			$stmt->bindParam(':user_id', $_SESSION['user']['id']);
 			$stmt->execute(); 			
 		}
 		catch (PDOException $e) 
@@ -40,7 +40,7 @@ class Model_Operation extends Model
 				(user_id, category_id, summ, date, comment) 
 				VALUES (:id, :cat_id, :summ, :dt, :comm)");
 		$data = array(
-			'id' => $_SESSION['user_id'],
+			'id' => $_SESSION['user']['id'],
 			'cat_id' => $_POST['cat_id'],
 			'summ' => $_POST['summ'],
 			'dt' => $_POST['date'],
@@ -70,7 +70,7 @@ class Model_Operation extends Model
 			WHERE operations.user_id = :id
 				AND date BETWEEN :date_from AND :date_to
 			ORDER BY date DESC, operation_id DESC ");
-		$stmt->bindParam(':id', $_SESSION['user_id']); 
+		$stmt->bindParam(':id', $_SESSION['user']['id']);
 		if (isset($_POST['date_from']) and isset($_POST['date_to']))		
 		{
 			$stmt->bindParam(':date_from', $_POST['date_from']);

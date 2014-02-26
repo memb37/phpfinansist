@@ -1,98 +1,80 @@
 <?php
 
-class Model_User extends Model
-{
-	
-    public function get_data()
-    {	
-		global $db;
-		try
-		{
-			$stmt = $db->prepare("SELECT `user_name`, `login`, `email` FROM users WHERE user_id= :id");
-			$stmt->bindParam(':id', $_SESSION['user_id']);			
-			$stmt->execute();
-			$data = $stmt->fetch(); 
-			return ($data);
-		}
+class Model_User extends Model {
+    public $id;
+    public $name;
+    public $email;
+    public $password;
 
-		catch(PDOException $e)
-		{
-			echo $e->getMessage();
-		}
+    public function __construct($id = null, $email = null) {
+        global $db;
+        if($id) {
+            $stmt = $db->prepare("SELECT `user_id` ,`user_name`, `email`
+                                FROM users WHERE user_id= :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $row = $stmt->fetch();
+            if($row) {
+                $this->id = $row['user_id'];
+                $this->name = $row['user_name'];
+                $this->email = $row['email'];
+            }
+        }
+        if($email) {
+            $stmt = $db->prepare("SELECT user_id, user_name, password
+                                FROM users WHERE email = :email LIMIT 1");
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $row = $stmt->fetch();
+            if($row) {
+                $this->id = $row['user_id'];
+                $this->name = $row['user_name'];
+                $this->password = $row['password'];
+            }
+        }
     }
-	
-	public function get_user()
-	{
-		global $db;
-		try
-		{
-    		$stmt = $db->prepare("SELECT user_id, user_name, password FROM users WHERE login = :login LIMIT 1");
-			$stmt->bindParam(':login', $_POST['login']);
-			$stmt->execute();
-			$row = $stmt -> fetch(PDO::FETCH_ASSOC);
-		}
 
-		catch (PDOException $e) 
-		{
-			echo $e->getMessage();
-		}
-		return $row;
-	}
-	public function add_user()
-	{
-		global $db;
-		$password = md5(md5(trim($_POST['password'])));
-		try
-		{
-			$stmt = $db->prepare("INSERT INTO users (login, password, user_name, email) VALUES (:login, :password, :user_name, :email)");
-			$data = array('login' => $_POST['login'], 'password' => $password, 
-							'user_name' => $_POST['name'], 'email' => $_POST['email']);
-			$stmt->execute($data);			
-		} 
-       
-		catch (PDOException $e) 
-		{
-			echo $e->getMessage();
-		}
-	}
+    public function check($password) {
+        if($this->password === md5(md5($password))) {
+            $_SESSION['user'] = array('id'=>$this->id, 'name'=>$this->name);
+            return false;
+        } else {
+            return array("message" => "Неверный логин или пароль");
+        }
+    }
+    public function create() {
+        if($this->email_isset()) {
+            return array("message" => "Пользователь с таким логином уже существует в базе данных");
+        }
+        $this->save();
+    }
 
-	public function login_free()
-	{
-		global $db;
-		try
-	{
-		$stmt = $db->prepare("SELECT COUNT(user_id) as count FROM users WHERE login= :login");
-		$stmt->bindParam(':login', $_POST['login']); 
-		$stmt->execute();
-		$row = $stmt->fetch();
-		return $row['count'];
-	}
+    public function save() {
+        global $db;
 
-	catch (PDOException $e) 
-	{
-		echo $e->getMessage();
-	}
-	}
+        $this->password = md5(md5(trim($this->password)));
+        $stmt = $db->prepare("INSERT INTO users (password, user_name, email)
+                            VALUES (:password, :user_name, :email)");
+        $data = array('password' => $this->password,
+                      'user_name' => $this->name, 'email' => $this->email);
+        $stmt->execute($data);
+        if(empty($error)) {
+            header("Location: ".BASE_URL);
+            exit();
+        }
+    }
 
-	public function get_operations()
-	{
-		try
-		{	
-			global $db; $data=null;
-			$stmt = $db->prepare("SELECT date, category_name, summ from operations
-			LEFT JOIN categories USING(category_id)
-			WHERE operations.user_id= :id ORDER BY date DESC, operation_id DESC LIMIT 0,10");
-			$stmt->bindParam(':id', $_SESSION['user_id']); 
-			$stmt->execute();
-			while ($row = $stmt->fetch())
-				{$data[] = $row;}
-			return ($data);
-		}
+    public function email_isset() {
+        global $db;
+        $stmt = $db->prepare("SELECT COUNT(user_id) as count FROM users WHERE email= :email");
+        $stmt->bindParam(':email', $this->email);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return $row['count'];
 
-		catch(PDOException $e)
-		{
-			echo $e->getMessage();
-		}
-	}
+    }
+
+    public static function logoff() {
+        unset($_SESSION['user']);
+    }
 }
-

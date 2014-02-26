@@ -4,7 +4,7 @@ require 'application/models/model_category.php';
 class Controller_Category extends Controller
 {
     public function action_index() {
-	$categories = Model_Category::find_all($_SESSION['user_id']);
+	$categories = Model_Category::find_all($_SESSION['user']['id']);
 	$this->view->generate('category/list.php', array('categories' => $categories));
     }
     
@@ -15,7 +15,7 @@ class Controller_Category extends Controller
 	if(!empty($_POST)) {
 	    
 	    $cat->name = $_POST['category_name'];
-	    $cat->user_id = $_SESSION['user_id'];
+	    $cat->user_id = $_SESSION['user']['id'];
 	    $cat->save();
 	    header('Location: ' . BASE_URL . '/category');
 	    exit();	    
