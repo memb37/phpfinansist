@@ -82,4 +82,8 @@ class Model_User extends Model {
         return $row['count'];
 
     }
+
+    public static function logoff() {
+        unset($_SESSION['user']);
+    }
 }

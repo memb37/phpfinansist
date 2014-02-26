@@ -28,7 +28,7 @@ class Controller_User extends Controller {
     }
 
     public function action_logout() {
-        session_destroy();
+        Model_User::logoff();
         header("Location: ".BASE_URL);
         exit();
     }
