@@ -45,3 +45,4 @@ class Controller_User extends Controller {
         $this->view->generate('user/register.php', $error);
     }
 }
+//gopagoda test
