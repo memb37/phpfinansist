@@ -51,12 +51,13 @@ class Model_User extends Model {
 
     public function save() {
         global $db;
-
-        $this->password = md5(md5(trim($this->password)));
+        $password = md5(md5(trim($this->password)));
+        $name = htmlspecialchars($this->name);
+        $email = htmlspecialchars($this->email);
         $stmt = $db->prepare("INSERT INTO users (password, user_name, email)
                             VALUES (:password, :user_name, :email)");
-        $data = array('password' => $this->password,
-                      'user_name' => $this->name, 'email' => $this->email);
+        $data = array('password' => $password,
+                      'user_name' => $name, 'email' => $email);
         $stmt->execute($data);
         if(empty($error)) {
             header("Location: ".BASE_URL);
@@ -66,8 +67,9 @@ class Model_User extends Model {
 
     public function email_isset() {
         global $db;
+        $email = htmlspecialchars($this->email);
         $stmt = $db->prepare("SELECT COUNT(user_id) as count FROM users WHERE email= :email");
-        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':email', $email);
         $stmt->execute();
         $row = $stmt->fetch();
         return $row['count'];

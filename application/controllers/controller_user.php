@@ -18,10 +18,11 @@ class Controller_User extends Controller {
     public function action_login() {
         $error = array();
         if(!empty($_POST)) {
-            $user = new Model_User(null, $_POST['email']);
-            $error = $user->check($_REQUEST['password']);
+            $user = new Model_User(null, ($_POST['email']));
+            $error = $user->check(($_POST['password']));
             if (!$error) {
                 header("Location: ".BASE_URL);
+                exit();
             }
         }
         $this->view->generate('user/login.php', $error);
@@ -37,9 +38,9 @@ class Controller_User extends Controller {
         $error = array();
         if(!empty($_POST)) {
             $user = new Model_User();
-            $user->password = htmlspecialchars($_POST['password']);
-            $user->name = htmlspecialchars($_POST['name']);
-            $user->email = htmlspecialchars($_POST['email']);
+            $user->password = ($_POST['password']);
+            $user->name = ($_POST['name']);
+            $user->email = ($_POST['email']);
             $error = $user->create();
         }
         $this->view->generate('user/register.php', $error);
