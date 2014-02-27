@@ -1,93 +1,57 @@
 <?php
-class Model_Operation extends Model
-{
-	public function get_data() {
-		
-		global $db;
-		$op_type = isset($_POST['outgo']) ? 1 : 2;
-		$data = array();
-        $data['categories'] = array();
-        $data['optype'] = $op_type;
-		try
-		{
-			$stmt = $db->prepare("SELECT category_id, category_name
-				FROM categories 
-				WHERE user_id = :user_id 
-				ORDER BY category_name");
-			$stmt->bindParam(':user_id', $_SESSION['user']['id']);
-			$stmt->execute(); 			
-		}
-		catch (PDOException $e) 
-		{
-			echo $e->getMessage();
-		}
-		while ($row = $stmt->fetch()) {
-			$data['categories'][] = $row;
-		}
-		return $data;	
-	}
 
-	
-	public function add_data() {
-		global $db;
-		if($_POST['optype'] == 1) {
-			$_POST['summ'] = -1 * $_POST['summ'];
-		}
-        $_POST['cat_id'] = !empty($_POST['cat_id']) ? $_POST['cat_id'] :NULL;
-		try
-		{
-			$stmt = $db->prepare("INSERT INTO operations
-				(user_id, category_id, summ, date, comment) 
-				VALUES (:id, :cat_id, :summ, :dt, :comm)");
-		$data = array(
-			'id' => $_SESSION['user']['id'],
-			'cat_id' => $_POST['cat_id'],
-			'summ' => $_POST['summ'],
-			'dt' => $_POST['date'],
-			'comm' => $_POST['comment']);
-		$stmt->execute($data);
-		}
+class Model_Operation extends Model {
+    public $id;
+    public $summ;
+    public $date;
+    public $comment;
+    public $user_id;
+    public $category_name;
+    public $category_id;
 
-		catch (PDOException $e) 
-		{
-			echo $e->getMessage();
-		}
-	}
-
-	public function get_report()
-	{
-		global $db; 
-		if (!isset($_POST['date_from']))
-			{$_POST['date_from']=date('Y-m-01');}
-		if (!isset($_POST['date_to']))
-			{$_POST['date_to']=date('Y-m-d');}
-
-		$stmt = $db->prepare("SELECT operation_id, date, category_name,
-			summ,  comment
-			from operations 
-			LEFT JOIN categories USING(category_id)
-			
+    public static function report($user_id, $date_from, $date_to) {
+        global $db;
+        $result = array();
+        $stmt = $db->prepare("SELECT operation_id, date,
+            category_name,	summ,  comment
+			FROM operations LEFT JOIN categories USING(category_id)
 			WHERE operations.user_id = :id
-				AND date BETWEEN :date_from AND :date_to
+			AND date BETWEEN :date_from AND :date_to
 			ORDER BY date DESC, operation_id DESC ");
-		$stmt->bindParam(':id', $_SESSION['user']['id']);
-		if (isset($_POST['date_from']) and isset($_POST['date_to']))		
-		{
-			$stmt->bindParam(':date_from', $_POST['date_from']);
-			$stmt->bindParam(':date_to', $_POST['date_to']);
-		}	
-		else
-		{
-			$stmt->bindParam(':date_from', $date_from);
-			$stmt->bindParam(':date_to', $date_to);
-		}
+        $stmt->bindParam(':id', $user_id);
+        $stmt->bindParam(':date_from', $date_from);
+        $stmt->bindParam(':date_to', $date_to);
+        $stmt->execute();
+        while($row = $stmt->fetch()) {
+            $op = new Model_Operation();
+            $op->id = $row['operation_id'];
+            $op->summ = $row['summ'];
+            $op->date = $row['date'];
+            $op->comment = $row['comment'];
+            $op->category_name = $row['category_name'];
+            $result[] = $op;
+        }
+        return $result;
+    }
 
-		$stmt->execute();
+    public function save($optype) {
+        global $db;
+        if($optype == 'minus') {
+            $this->summ *= -1;
+        }
+        $this->comment = htmlspecialchars($this->comment);
+        $stmt = $db->prepare("INSERT INTO operations
+            (user_id, category_id, summ, date, comment)
+            VALUES (:user_id, :cat_id, :summ, :date, :comm)");
+        $data = array(
+            'user_id' => $this->user_id,
+            'cat_id' => $this->category_id,
+            'summ' => $this->summ,
+            'date' => $this->date,
+            'comm' => $this->comment);
+        $stmt->execute($data);
 
-		while ($row = $stmt->fetch())
-			{$data[] = $row;}
-		if (isset ($data)) {return ($data);}
 
-	}
 
+    }
 }
