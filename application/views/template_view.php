@@ -55,7 +55,6 @@
 				<? if(isset($_SESSION['user'])): ?>
     			<li><a href="<?=BASE_URL?>">Домой</a></li>
     			<li><a href="operation">Операции</a></li>
-    			<li><a href="operation/report">Отчет</a></li>
     			<li><a href="category">Категории</a></li>
 				<? endif; ?>
 			</ul>

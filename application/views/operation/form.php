@@ -1,9 +1,9 @@
 <form method="POST">
-	<input type=hidden name=optype value="<?=$data['optype']?>">
+
 <table border = "1" align="center">
 <tr height="30">
 	<td colspan="2">
-		
+
 	</td>
 </tr>
 <tr>
@@ -12,11 +12,11 @@
 	</td>
 	<td>
 		<select name="cat_id">
-            <option value>без категории</option>>
-			<?foreach ($data['categories'] as $d):?>
-			    <option value=<?=$d['category_id']?>><?=$d['category_name']?></option>
+            <option value>без категории</option>
+			<?foreach ($data['categories'] as $cat):?>
+			    <option value=<?=$cat->id?>><?=$cat->name?></option>
              <?endforeach?>
-		</select>		
+		</select>
 	</td>
 </tr>
 <tr>
@@ -44,11 +44,10 @@
 	</td>
 </tr>
 <tr>
-	<td colspan="2" align="center">
+	<td colspan="2">
 		<input type="submit" value="добавить" name="add_op">
 	</td>
 <tr>
 </table>
 
 </form>
-<a href="user">назад</a>
