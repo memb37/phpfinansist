@@ -3,10 +3,7 @@
 <table border = "1" align="center">
 <tr height="30">
 	<td colspan="2">
-        <select name="op_type">
-            <option value="minus">Расход</option>
-            <option value="plus">Доход</option>
-        </select>
+
 	</td>
 </tr>
 <tr>
@@ -15,7 +12,7 @@
 	</td>
 	<td>
 		<select name="cat_id">
-            <option value>без категории</option>>
+            <option value>без категории</option>
 			<?foreach ($data['categories'] as $cat):?>
 			    <option value=<?=$cat->id?>><?=$cat->name?></option>
              <?endforeach?>
@@ -47,7 +44,7 @@
 	</td>
 </tr>
 <tr>
-	<td colspan="2" align="center">
+	<td colspan="2">
 		<input type="submit" value="добавить" name="add_op">
 	</td>
 <tr>

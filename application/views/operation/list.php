@@ -1,3 +1,10 @@
+<a href="operation/create?optype=minus" class="btn btn-default">
+    Добавить расход
+</a>
+<a href="operation/create?optype=plus" class="btn btn-default">
+    Добавить доход
+</a>
+
 <table class="table table-hover">
     <thead>
     <tr>
@@ -13,7 +20,7 @@
     <tbody>
     <? foreach ($data['operations'] as $op): ?>
     <tr class="text-left">
-        <td><?=$op->id?></td>
+        <td><?=$op->operation_id?></td>
         <td><?=$op->date?></td>
         <td><?=($op->category_name ? : "без категории")?></td>
         <td><?=$op->summ?></td>
@@ -23,7 +30,7 @@
     </tbody>
 </table>
 
-<form class="form-inline" role="form" method="POST">
+<form class="form-inline" role="form" method="GET">
     <fieldset>
         <div class="form-group">
             <input name="date_from" type="date" class="form-control" value=<?=$data['date_from']?>>
