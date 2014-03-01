@@ -36,12 +36,13 @@ class Model_User {
 
     public function check($password) {
         if($this->password === md5(md5($password))) {
-            $_SESSION['user'] = array('id'=>$this->id, 'name'=>$this->name);
+            $_SESSION['user'] = array('id' => $this->id, 'name' => $this->name);
             return false;
         } else {
             return array("message" => "Неверный логин или пароль");
         }
     }
+
     public function create() {
         if($this->email_isset()) {
             return array("message" => "Пользователь с таким логином уже существует в базе данных");
@@ -56,7 +57,7 @@ class Model_User {
         $email = htmlspecialchars($this->email);
         $stmt = $db->prepare("INSERT INTO users (password, user_name, email)
                             VALUES (:password, :user_name, :email)");
-        $data = array('password' => $password,
+        $data = array('password'  => $password,
                       'user_name' => $name, 'email' => $email);
         $stmt->execute($data);
         if(empty($error)) {
@@ -73,7 +74,6 @@ class Model_User {
         $stmt->execute();
         $row = $stmt->fetch();
         return $row['count'];
-
     }
 
     public static function logoff() {

@@ -36,11 +36,11 @@ class Model_Operation {
             (user_id, category_id, summ, date, comment)
             VALUES (:user_id, :category_id, :summ, :date, :comment)");
         $data = array(
-            'user_id' => $this->user_id,
+            'user_id'     => $this->user_id,
             'category_id' => $this->category_id,
-            'summ' => $this->summ,
-            'date' => $this->date,
-            'comment' => $this->comment);
+            'summ'        => $this->summ,
+            'date'        => $this->date,
+            'comment'     => $this->comment);
         $stmt->execute($data);
     }
 }

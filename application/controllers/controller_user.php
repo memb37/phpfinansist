@@ -20,7 +20,7 @@ class Controller_User extends Controller {
         if(!empty($_POST)) {
             $user = new Model_User(null, ($_POST['email']));
             $error = $user->check(($_POST['password']));
-            if (!$error) {
+            if(!$error) {
                 header("Location: ".BASE_URL);
                 exit();
             }

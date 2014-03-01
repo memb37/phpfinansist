@@ -9,8 +9,8 @@ class Controller_Operation extends Controller {
         $date_to = isset($_GET['date_to']) ? $_GET['date_to'] : date('Y-m-d');
         $operations = Model_Operation::report($_SESSION['user']['id'], $date_from, $date_to);
         $this->view->generate('operation/list.php', array('operations' => $operations,
-                                                            'date_from'  => $date_from,
-                                                            'date_to'    => $date_to));
+                                                          'date_from'  => $date_from,
+                                                          'date_to'    => $date_to));
     }
 
 
@@ -23,7 +23,7 @@ class Controller_Operation extends Controller {
             $operation->summ = $_POST['summ'];
             $operation->user_id = $_SESSION['user']['id'];
             $operation->save($_GET['optype']);
-            header('Location: ' . BASE_URL . 'operation');
+            header('Location: '.BASE_URL.'operation');
             exit();
         }
         $categories = Model_Category::find_all($_SESSION['user']['id']);
