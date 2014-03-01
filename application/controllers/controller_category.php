@@ -2,6 +2,7 @@
 require 'application/models/model_category.php';
 
 class Controller_Category extends Controller {
+
     public function action_index() {
         $categories = Model_Category::find_all($_SESSION['user']['id']);
         $this->view->generate('category/list.php', array('categories' => $categories));
@@ -15,8 +16,7 @@ class Controller_Category extends Controller {
             $cat->name = $_POST['category_name'];
             $cat->user_id = $_SESSION['user']['id'];
             $cat->save();
-            header('Location: '.BASE_URL.'/category');
-            exit();
+            self::prev_page();
         }
     }
 
@@ -27,14 +27,17 @@ class Controller_Category extends Controller {
         if(!empty($_POST)) {
             $category->name = $_POST['category_name'];
             $category->save();
-            header('Location: '.BASE_URL.'/category');
-            exit();
+            self::prev_page();
         }
     }
 
     public function action_delete() {
         $cat = new Model_Category($_REQUEST['id']);
         $cat->delete();
+        self::prev_page();
+    }
+
+    private static function prev_page() {
         header('Location: '.BASE_URL.'/category');
         exit();
     }

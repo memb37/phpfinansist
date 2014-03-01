@@ -17,18 +17,22 @@ class Controller_Operation extends Controller {
     public function action_create() {
         if(!empty($_POST)) {
             $operation = new Model_Operation();
-            $operation->category_id = ($_POST['cat_id']) ? : null;
-            $operation->comment = $_POST['comment'];
-            $operation->date = $_POST['date'];
-            $operation->summ = $_POST['summ'];
-            $operation->user_id = $_SESSION['user']['id'];
-            $operation->save($_GET['optype']);
+            $this->set_properties($operation);
             header('Location: '.BASE_URL.'operation');
             exit();
         }
         $categories = Model_Category::find_all($_SESSION['user']['id']);
         $this->view->generate('operation/form.php', array('categories' => $categories));
 
+    }
+
+    private function set_properties($operation) {
+        $operation->category_id = ($_POST['cat_id']) ? : null;
+        $operation->comment = $_POST['comment'];
+        $operation->date = $_POST['date'];
+        $operation->summ = $_POST['summ'];
+        $operation->user_id = $_SESSION['user']['id'];
+        $operation->save($_GET['optype']);
     }
 }
 
