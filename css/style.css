@@ -23,8 +23,6 @@ body {
 
 /* Nav links */
 .mynavbar-item {
-   padding: 0px;
-
   color: #cdddeb;
 }
 .mynavbar-item:hover,

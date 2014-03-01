@@ -29,7 +29,6 @@ class Controller_Operation extends Controller {
         $categories = Model_Category::find_all($_SESSION['user']['id']);
         $this->view->generate('operation/form.php', array('categories' => $categories));
 
-        //
     }
 }
 

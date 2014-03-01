@@ -24,7 +24,7 @@
 		Сумма
 	</td>
 	<td>
-		<input type="text" name="summ" size="10" value="0"></input>
+		<input type="text" name="summ" size="10" value="0">
 	</td>
 </tr>
 <tr>
@@ -32,7 +32,7 @@
 		Дата
 	</td>
 	<td>
-		<input name="date" size = "10" value=<? echo date('Y-m-d');?> type="text"/>
+		<input name="date" size = "10" value=<? echo date('Y-m-d');?> type="text">
 	</td>
 </tr>
 <tr>
