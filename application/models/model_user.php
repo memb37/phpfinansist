@@ -37,9 +37,13 @@ class Model_User {
 	    return null;
 	}
     }
+    
+    protected static function hashed_password($password) {
+	return md5(md5($password));
+    }
 
     public function check($password) {
-        if($this->password === md5(md5(trim($password)))) {
+        if($this->password === self::hashed_password($password)) {
             $_SESSION['user'] = array('id' => $this->id, 'name' => $this->name);
             return false;
         } else {
@@ -56,7 +60,7 @@ class Model_User {
 
     public function save() {
         global $db;
-        $password = md5(md5(trim($this->password)));
+        $password = self::hashed_password($this->password);
         $name = htmlspecialchars($this->name);
         $email = htmlspecialchars($this->email);
         $stmt = $db->prepare("INSERT INTO users (password, user_name, email)
