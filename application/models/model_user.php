@@ -35,7 +35,7 @@ class Model_User {
     }
 
     public function check($password) {
-        if($this->password === md5(md5($password))) {
+        if($this->password === md5(md5(trim($password)))) {
             $_SESSION['user'] = array('id' => $this->id, 'name' => $this->name);
             return false;
         } else {
@@ -45,7 +45,7 @@ class Model_User {
 
     public function create() {
         if($this->email_isset()) {
-            return array("message" => "Пользователь с таким логином уже существует в базе данных");
+            return array("message" => "Пользователь с логином  $this->email уже существует в базе данных");
         }
         $this->save();
     }
@@ -60,10 +60,6 @@ class Model_User {
         $data = array('password'  => $password,
                       'user_name' => $name, 'email' => $email);
         $stmt->execute($data);
-        if(empty($error)) {
-            header("Location: ".BASE_URL);
-            exit();
-        }
     }
 
     public function email_isset() {
@@ -76,7 +72,7 @@ class Model_User {
         return $row['count'];
     }
 
-    public static function logoff() {
+    public static function logout() {
         unset($_SESSION['user']);
     }
 }

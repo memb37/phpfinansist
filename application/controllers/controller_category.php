@@ -16,7 +16,7 @@ class Controller_Category extends Controller {
             $cat->name = $_POST['category_name'];
             $cat->user_id = $_SESSION['user']['id'];
             $cat->save();
-            self::prev_page();
+            parent::go_page('category');
         }
     }
 
@@ -27,19 +27,14 @@ class Controller_Category extends Controller {
         if(!empty($_POST)) {
             $category->name = $_POST['category_name'];
             $category->save();
-            self::prev_page();
+            parent::go_page('category');
         }
     }
 
     public function action_delete() {
         $cat = new Model_Category($_REQUEST['id']);
         $cat->delete();
-        self::prev_page();
-    }
-
-    private static function prev_page() {
-        header('Location: '.BASE_URL.'/category');
-        exit();
+        parent::go_page('category');
     }
 
 }

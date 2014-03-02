@@ -22,15 +22,15 @@ class Controller_User extends Controller {
             $user = new Model_User(null, ($_POST['email']));
             $error = $user->check(($_POST['password']));
             if(!$error) {
-                self::main_page();
+                parent::go_page();
             }
         }
         $this->view->generate('user/login.php', $error);
     }
 
     public function action_logout() {
-        Model_User::logoff();
-        self::main_page();
+        Model_User::logout();
+        parent::go_page();
     }
 
     public function action_register() {
@@ -41,12 +41,11 @@ class Controller_User extends Controller {
             $user->name = ($_POST['name']);
             $user->email = ($_POST['email']);
             $error = $user->create();
+            if(empty($error)) {
+                parent::go_page();
+            }
         }
         $this->view->generate('user/register.php', $error);
     }
 
-    private static function main_page() {
-        header("Location: ".BASE_URL);
-        exit();
-    }
 }
