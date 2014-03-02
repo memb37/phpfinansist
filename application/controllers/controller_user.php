@@ -3,6 +3,7 @@ require 'application/models/model_user.php';
 
 
 class Controller_User extends Controller {
+
     protected function check_auth($action) {
         if(in_array($action, array('action_login', 'action_register'))) {
             return;
@@ -20,18 +21,16 @@ class Controller_User extends Controller {
         if(!empty($_POST)) {
             $user = new Model_User(null, ($_POST['email']));
             $error = $user->check(($_POST['password']));
-            if (!$error) {
-                header("Location: ".BASE_URL);
-                exit();
+            if(!$error) {
+                parent::go_page();
             }
         }
         $this->view->generate('user/login.php', $error);
     }
 
     public function action_logout() {
-        Model_User::logoff();
-        header("Location: ".BASE_URL);
-        exit();
+        Model_User::logout();
+        parent::go_page();
     }
 
     public function action_register() {
@@ -42,7 +41,11 @@ class Controller_User extends Controller {
             $user->name = ($_POST['name']);
             $user->email = ($_POST['email']);
             $error = $user->create();
+            if(empty($error)) {
+                parent::go_page();
+            }
         }
         $this->view->generate('user/register.php', $error);
     }
+
 }

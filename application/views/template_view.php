@@ -11,14 +11,6 @@
     <title>Главная</title>
 </head>
 <body>
-     <!--<div class="blog-masthead">	<!-- TOP NAVBAR-->
-   <!--   <div class="container">
-        <nav class="blog-nav text-right">
-          <a class="blog-nav-item" href="user/profile">Профиль</a>
-          <a class="blog-nav-item" href="user/logout">Выход</a>
-        </nav>
-      </div>
-    </div> -->
 
 	<div class="navbar navbar-fixed-top mynavbar" role="navigation">
 		<div class="container mynavbar-item">
