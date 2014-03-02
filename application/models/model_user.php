@@ -45,7 +45,7 @@ class Model_User {
 
     public function create() {
         if($this->email_occupied()) {
-            return array("message" => "Пользователь с логином  $this->email уже существует в базе данных");
+            return array("message" => "Пользователь с адресом $this->email уже существует в базе данных");
         }
         $this->save();
     }
