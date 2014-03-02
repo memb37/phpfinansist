@@ -1,6 +1,7 @@
 
 TODO
 ====
+* Убрать везде закрывающие `?>` 
 * Разобраться с `Notice: Undefined index: message in /home/choom/Projects/phpfinansist/application/views/user/login.php on line 13` на PHP 5.5
 * Уведомление об успешной регистрации, о добавении операции, добавлении/удалении/изменении категории
 * Выводить email или имя текущего залогиненного пользователя
