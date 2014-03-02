@@ -18,6 +18,7 @@ class Controller_Operation extends Controller {
         if(!empty($_POST)) {
             $operation = new Model_Operation();
             $this->set_properties($operation);
+	    $this->save($_GET['optype']);
             $this->go_page('operation');
         }
         $categories = Model_Category::find_all($_SESSION['user']['id']);
@@ -31,7 +32,6 @@ class Controller_Operation extends Controller {
         $operation->date = $_POST['date'];
         $operation->summ = $_POST['summ'];
         $operation->user_id = $_SESSION['user']['id'];
-        $operation->save($_GET['optype']);
     }
 }
 
