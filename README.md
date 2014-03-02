@@ -1,23 +1,25 @@
 phpfinansist
 ============
-Server Requirements:
+О проекте:
+---------
+Web-приложение для учета личных финансов
 
-PHP 5.4.6, MySQL 5.5.34, PHP PDO, PHP PDO MySQL
+Системные требования:
+---------------------
+
+Apache(с модулем mod_rewrite)
+
+PHP 5.2 (должна быть включена директива short_open_tag), PDO_MySQL
+
+MySQL 5.0
 
 
-Installation:
+Установка:
+----------
+Поместите все файлы в директорию вашего web-сервера
 
-Copy all files in your webserver’s directory
+Восстановите БД из дампа:
 
-example /var/www/phpfinansist/
-  
-Create database : 
-		
-	mysql -u root -p
-	mysql>CREATE DATABASE phpfinDB
+	mysql -u %user% -p phpfinansist  < scripts/createdb.sql
 
-Restore database from dump: 
-
-	mysql -u root -p phpfinDB  < MyFinDB.sql
-
-Edit file config.php.default and rename it to config.php
+Отредактируйте файл config.php.default и переименуйте его в config.php
