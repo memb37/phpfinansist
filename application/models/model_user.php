@@ -44,7 +44,7 @@ class Model_User {
     }
 
     public function create() {
-        if($this->email_isset()) {
+        if($this->email_occupied()) {
             return array("message" => "Пользователь с логином  $this->email уже существует в базе данных");
         }
         $this->save();
@@ -62,7 +62,7 @@ class Model_User {
         $stmt->execute($data);
     }
 
-    public function email_isset() {
+    public function email_occupied() {
         global $db;
         $email = htmlspecialchars($this->email);
         $stmt = $db->prepare("SELECT COUNT(user_id) as count FROM users WHERE email= :email");
