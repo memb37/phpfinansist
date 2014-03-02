@@ -18,7 +18,7 @@ class Controller_Operation extends Controller {
         if(!empty($_POST)) {
             $operation = new Model_Operation();
             $this->set_properties($operation);
-            parent::go_page('operation');
+            $this->go_page('operation');
         }
         $categories = Model_Category::find_all($_SESSION['user']['id']);
         $this->view->generate('operation/form.php', array('categories' => $categories));

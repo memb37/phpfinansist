@@ -6,7 +6,7 @@ class Controller {
 
     protected function check_auth($action) {
         if(empty($_SESSION['user'])) {
-            self::go_page("user/login");
+            $this->go_page("user/login");
         }
     }
 
@@ -19,7 +19,7 @@ class Controller {
         $this->view = new View();
     }
 
-    protected function go_page($page=null) {
+    protected function go_page($page='main/index') {
         header('Location: '.BASE_URL.$page);
         exit();
     }

@@ -22,7 +22,7 @@ class Controller_User extends Controller {
             $user = new Model_User(null, ($_POST['email']));
             $error = $user->check(($_POST['password']));
             if(!$error) {
-                parent::go_page();
+                $this->go_page();
             }
         }
         $this->view->generate('user/login.php', $error);
@@ -30,7 +30,7 @@ class Controller_User extends Controller {
 
     public function action_logout() {
         Model_User::logout();
-        parent::go_page();
+        $this->go_page();
     }
 
     public function action_register() {
@@ -42,7 +42,7 @@ class Controller_User extends Controller {
             $user->email = ($_POST['email']);
             $error = $user->create();
             if(empty($error)) {
-                parent::go_page();
+                $this->go_page();
             }
         }
         $this->view->generate('user/register.php', $error);
