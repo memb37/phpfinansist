@@ -18,7 +18,7 @@ class Controller_Operation extends Controller {
         if(!empty($_POST)) {
             $operation = new Model_Operation();
             $this->set_properties($operation);
-	    $this->save($_GET['optype']);
+	        $operation->save($_GET['optype']);
             $this->go_page('operation');
         }
         $categories = Model_Category::find_all($_SESSION['user']['id']);
