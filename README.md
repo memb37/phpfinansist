@@ -9,9 +9,9 @@ Web-приложение для учета личных финансов
 
 Apache(с модулем mod_rewrite)
 
-PHP 5.2 (должна быть включена директива short_open_tag), PDO_MySQL
+PHP => 5.2, PDO_MySQL
 
-MySQL 5.0
+MySQL => 5.0
 
 
 Установка:
@@ -20,6 +20,6 @@ MySQL 5.0
 
 Восстановите БД из дампа:
 
-	mysql -u %user% -p phpfinansist  < scripts/createdb.sql
+	mysql  phpfinansist  < scripts/createdb.sql
 
-Отредактируйте файл config.php.default и переименуйте его в config.php
+Скопируйте config.php.default в config.php и отредактируйте
