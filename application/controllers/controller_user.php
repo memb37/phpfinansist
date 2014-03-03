@@ -19,9 +19,7 @@ class Controller_User extends Controller {
     public function action_login() {
         $error = array();
         if(!empty($_POST)) {
-            $user = Model_User::find_by_email($_POST['email']);
-	    var_dump($user);
-            $error = $user->check(($_POST['password']));
+            $error = Model_User::check($_POST['email'], $_POST['password']);
             if(!$error) {
                 $this->go_page();
             }

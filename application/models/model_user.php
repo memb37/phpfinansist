@@ -42,9 +42,12 @@ class Model_User {
 	return md5(md5($password));
     }
 
-    public function check($password) {
-        if($this->password === self::hashed_password($password)) {
-            $_SESSION['user'] = array('id' => $this->id, 'name' => $this->name);
+    public static function check($email, $password) {
+        if(!$user = self::find_by_email($email)) {
+            return array("message" => "Неверный логин");
+        }
+        if($user->password === self::hashed_password($password)) {
+            $_SESSION['user'] = array('id' => $user->id, 'name' => $user->name);
             return false;
         } else {
             return array("message" => "Неверный логин или пароль");
