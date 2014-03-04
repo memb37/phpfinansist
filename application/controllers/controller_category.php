@@ -1,5 +1,4 @@
 <?php
-require '../application/models/model_category.php';
 
 class Controller_Category extends Controller {
 
