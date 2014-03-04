@@ -1,7 +1,7 @@
 <?php
 
-require 'application/models/model_operation.php';
-require 'application/models/model_category.php';
+require '../application/models/model_operation.php';
+require '../application/models/model_category.php';
 
 class Controller_Operation extends Controller {
     public function action_index() {

@@ -1,5 +1,5 @@
 <?php
-require 'application/models/model_user.php';
+require '../application/models/model_user.php';
 
 
 class Controller_User extends Controller {
