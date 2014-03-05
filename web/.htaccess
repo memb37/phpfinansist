@@ -1,4 +1,6 @@
+<IfModule mod_php5.c>
 php_flag short_open_tag on
+</IfModule>
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f

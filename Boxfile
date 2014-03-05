@@ -10,6 +10,7 @@ web1:
   name: phpf-web
   php_version: "5.4.14"
   document_root: web/
+  php_short_open_tag: "1"
   after_build: 
     - "cp config.php.pagodabox config.php"
   before_deploy: 
