@@ -1,5 +1,8 @@
 <?php
 session_start();
+set_include_path(BASE_PATH . 'application'. PATH_SEPARATOR . get_include_path());
+
+
 try
 {
     $db = new PDO("mysql:host=$hostname; dbname=$dbName", $username, $password);
@@ -17,9 +20,5 @@ require_once 'core/route.php';
 Route::start(); // запускаем маршрутизатор
 
 function __autoload($class_name) {
-    $filename = strtolower($class_name) . '.php';
-    $dirname = explode("_", $filename);
-    $dirname = $dirname[0] . "s/";
-    $file = BASE_PATH."/application/".$dirname.$filename;
-    require ($file);
+    require_once str_replace('_', DIRECTORY_SEPARATOR, strtolower($class_name)) . '.php';
 }
