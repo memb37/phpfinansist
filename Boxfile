@@ -9,6 +9,7 @@ global:
 web1:
   name: phpf-web
   php_version: "5.4.14"
+  document_root: web/
   after_build: 
     - "cp config.php.pagodabox config.php"
   before_deploy: 
@@ -17,4 +18,3 @@ web1:
     - mysqli
     - pdo_mysql
     - mysql
-

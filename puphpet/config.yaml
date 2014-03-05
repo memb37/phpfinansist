@@ -68,7 +68,7 @@ apache:
             servername: phpfinansist.dev
             serveraliases:
                 - www.phpfinansist.dev
-            docroot: /vagrant
+            docroot: /vagrant/web
             port: '80'
             setenv:
                 - 'APP_ENV dev'
