@@ -1,6 +1,6 @@
 <?php
 
-class Model_Operation {
+class Model_Operation extends Model {
     public $operation_id;
     public $summ;
     public $date;
