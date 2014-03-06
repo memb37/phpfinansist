@@ -35,9 +35,11 @@ class Controller_User extends Controller {
         $error = array();
         if(!empty($_POST)) {
             $user = new Model_User();
-            $user->password = ($_POST['password']);
-            $user->name = ($_POST['name']);
-            $user->email = ($_POST['email']);
+            $user->from_array(array(
+                'password' => $_POST['password'],
+                'name' => $_POST['name'],
+                'email' => $_POST['email']
+            ));
             $error = $user->create();
             if(empty($error)) {
                 $this->go_page();

@@ -14,7 +14,13 @@ class Controller_Operation extends Controller {
     public function action_create() {
         if(!empty($_POST)) {
             $operation = new Model_Operation();
-            $this->set_properties($operation);
+            $operation->from_array(array(
+                'category_id' => ($_POST['cat_id']) ? : null,
+                'comment' => $_POST['comment'],
+                'date' => $_POST['date'],
+                'summ' => $_POST['summ'],
+                'user_id' => $_SESSION['user']['id']
+            ));
 	        $operation->save($_GET['optype']);
             $this->go_page('operation');
         }
@@ -23,12 +29,5 @@ class Controller_Operation extends Controller {
 
     }
 
-    private function set_properties($operation) {
-        $operation->category_id = ($_POST['cat_id']) ? : null;
-        $operation->comment = $_POST['comment'];
-        $operation->date = $_POST['date'];
-        $operation->summ = $_POST['summ'];
-        $operation->user_id = $_SESSION['user']['id'];
-    }
 }
 

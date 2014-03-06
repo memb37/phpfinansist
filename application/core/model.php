@@ -10,10 +10,3 @@ class Model {
         }
     }
 }
-
-/*
-$user->from_array(array(
-                        'id' => $_POST['id'],
-                        'name' => $_POST['name']
-                        ));
-*/                        

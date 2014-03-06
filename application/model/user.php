@@ -1,6 +1,6 @@
 <?php
 
-class Model_User {
+class Model_User extends Model {
     public $id;
     public $name;
     public $email;
@@ -16,10 +16,12 @@ class Model_User {
             $row = $stmt->fetch();
 	    
             if($row) {
-                $this->id = $row['user_id'];
-                $this->name = $row['user_name'];
-                $this->email = $row['email'];
-		$this->password = $row['password'];
+                $this->from_array(array(
+                    'id' => $row['user_id'],
+                    'name' => $row['user_name'],
+                    'email' => $row['email'],
+                    'password' => $row['password']
+                ));
             } 
         }
     }

@@ -14,6 +14,7 @@ catch(PDOException $e)
     echo "Не могу подключиться к БД " . $e->getMessage();
 }
 
+require_once 'core/model.php';
 require_once 'core/view.php';
 require_once 'core/controller.php';
 require_once 'core/route.php';

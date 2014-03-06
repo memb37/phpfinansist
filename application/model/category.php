@@ -1,6 +1,6 @@
 <?php
 
-class Model_Category {
+class Model_Category extends Model {
     public $id;
     public $name;
     public $user_id;
@@ -16,9 +16,12 @@ class Model_Category {
             $row = $stmt->fetch();
 
             if($row) {
-                $this->id = $row['category_id'];
-                $this->name = $row['category_name'];
-                $this->user_id = $row['user_id'];
+                $this->from_array(array(
+                    'id' => $row['category_id'],
+                    'name' => $row['category_name'],
+                    'user_id' => $row['user_id']
+                ));
+
             }
         }
     }
