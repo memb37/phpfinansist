@@ -1,8 +1,5 @@
 <?php
 
-require 'application/models/model_operation.php';
-require 'application/models/model_category.php';
-
 class Controller_Operation extends Controller {
     public function action_index() {
         $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : date('Y-m-01');

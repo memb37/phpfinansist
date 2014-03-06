@@ -24,19 +24,6 @@ class Route {
         $controller_name = 'Controller_'.$controller_name;
         $action_name = 'action_'.$action_name;
 
-        // подцепляем файл с классом контроллера
-        $controller_file = strtolower($controller_name).'.php';
-        $controller_path = "application/controllers/".$controller_file;
-
-        if(file_exists($controller_path)) {
-            include "application/controllers/".$controller_file;
-        } else {
-            /*
-            правильно было бы кинуть здесь исключение,
-            но для упрощения сразу сделаем редирект на страницу 404
-            */
-            Route::ErrorPage404();
-        }
 
         // создаем контроллер
         $controller = new $controller_name;
