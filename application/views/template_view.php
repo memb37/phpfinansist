@@ -6,8 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.min.css">   
     <script src="js/jquery-2.0.3.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/additional-methods.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="css/style.css"> 
     <title>Главная</title>
