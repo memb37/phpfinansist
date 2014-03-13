@@ -81,7 +81,7 @@ class Model_User extends Model {
 
     public function validate() {
         $error = array();
-        if(!preg_match('/^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/', $this->email)) {
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $error[] = ("Введен неверный email");
         }
         if(strlen($this->password) < 5) {
