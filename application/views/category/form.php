@@ -3,3 +3,6 @@
     <input type=text name=category_name value="<?=$data['category']->name?>">
     <button type=submit>Сохранить</button>
 </form>
+<? if (!empty($message)) : ?>
+<p><?= $message ?>
+    <? endif; ?>

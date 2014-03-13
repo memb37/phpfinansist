@@ -34,15 +34,18 @@ class Controller_User extends Controller {
     public function action_register() {
         $error = array();
         if(!empty($_POST)) {
-            $user = new Model_User();
-            $user->from_array(array(
-                'password' => $_POST['password'],
-                'name' => $_POST['name'],
-                'email' => $_POST['email']
-            ));
-            $error = $user->create();
+            $error = Model_User::validate($_POST['email'], $_POST['password'], $_POST['name']);
             if(empty($error)) {
-                $this->go_page();
+                $user = new Model_User();
+                $user->from_array(array(
+                    'password' => $_POST['password'],
+                    'name' => $_POST['name'],
+                    'email' => $_POST['email']
+                ));
+                $error = $user->create();
+                if(empty($error)) {
+                    $this->go_page();
+                }
             }
         }
         $this->view->generate('user/register.php', $error);

@@ -78,4 +78,18 @@ class Model_User extends Model {
     public static function logout() {
         unset($_SESSION['user']);
     }
+
+    public static function validate($email, $password, $name) {
+        $error = array();
+        if(!preg_match('/^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/', $email)) {
+            $error[] = ("Введен неверный email");
+        }
+        if(strlen($password) < 5) {
+            $error[] = ("Пароль должен быть не менее 5 символов");
+        }
+        if(strlen($name) > 30) {
+            $error[] = ("Имя должно быть не длинее 30 символов");
+        }
+        return $error;
+    }
 }
