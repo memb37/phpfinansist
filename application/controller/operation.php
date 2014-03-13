@@ -14,8 +14,6 @@ class Controller_Operation extends Controller {
     public function action_create() {
         $error = array();
         if(!empty($_POST)) {
-            $error = Model_Operation::validate($_POST['summ'], $_POST['date'], $_POST['comment']);
-            if(empty($error)) {
                 $operation = new Model_Operation();
                 $operation->from_array(array(
                     'category_id' => ($_POST['cat_id']) ? : null,
@@ -24,10 +22,11 @@ class Controller_Operation extends Controller {
                     'summ' => $_POST['summ'],
                     'user_id' => $_SESSION['user']['id']
                 ));
-                $operation->save($_GET['optype']);
-                $this->go_page('operation');
-            }
-
+                $error = $operation->validate();
+                if(empty($error)) {
+                    $operation->save($_GET['optype']);
+                    $this->go_page('operation');
+                }
         }
         $categories = Model_Category::find_all($_SESSION['user']['id']);
         $this->view->generate('operation/form.php', array('categories' => $categories, 'message' => $error));

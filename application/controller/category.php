@@ -11,13 +11,13 @@ class Controller_Category extends Controller {
         $error = array();
         $cat = new Model_Category();
         if(!empty($_POST)) {
-            $error = Model_Category::validate($_POST['category_name']);
-            if(empty($error)) {
                 $cat->name = $_POST['category_name'];
                 $cat->user_id = $_SESSION['user']['id'];
-                $cat->save();
-                $this->go_page('category');
-            }
+                $error = $cat->validate();
+                if(empty($error)) {
+                    $cat->save();
+                    $this->go_page('category');
+                }
         }
         $this->view->generate('category/form.php',
             array('category' => $cat, 'action' => 'category/create', 'message' => $error));
@@ -27,11 +27,11 @@ class Controller_Category extends Controller {
         $error = array();
         $category = new Model_Category($_REQUEST['id']);
         if(!empty($_POST)) {
-            $error = Model_Category::validate($_POST['category_name']);
-            if(empty($error)) {
                 $category->name = $_POST['category_name'];
-                $category->save();
-                $this->go_page('category');
+                $error = $category->validate();
+                if(empty($error)) {
+                    $category->save();
+                    $this->go_page('category');
             }
         }
         $this->view->generate('category/form.php',

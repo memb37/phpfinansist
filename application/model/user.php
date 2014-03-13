@@ -79,15 +79,15 @@ class Model_User extends Model {
         unset($_SESSION['user']);
     }
 
-    public static function validate($email, $password, $name) {
+    public function validate() {
         $error = array();
-        if(!preg_match('/^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/', $email)) {
+        if(!preg_match('/^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/', $this->email)) {
             $error[] = ("Введен неверный email");
         }
-        if(strlen($password) < 5) {
+        if(strlen($this->password) < 5) {
             $error[] = ("Пароль должен быть не менее 5 символов");
         }
-        if(strlen($name) > 30) {
+        if(strlen($this->name) > 30) {
             $error[] = ("Имя должно быть не длинее 30 символов");
         }
         return $error;

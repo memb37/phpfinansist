@@ -44,14 +44,14 @@ class Model_Operation extends Model {
         $stmt->execute($data);
     }
 
-    public static function validate($summ, $date, $comment) {
-        if(!is_numeric($summ)) {
+    public function validate() {
+        if(!is_numeric($this->summ)) {
             $error[] =("Сумма должна быть числом");
         }
-        if(!preg_match('/(19|20)\d\d-((0[1-9]|1[012])-(0[1-9]|[12]\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)$/', $date)) {
+        if(!preg_match('/(19|20)\d\d-((0[1-9]|1[012])-(0[1-9]|[12]\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)$/', $this->date)) {
             $error[] =("Введите дату в формате ГГГГ-ММ-ДД");
         }
-        if(strlen($comment) > 255) {
+        if(strlen($this->comment) > 255) {
             $error[] =("Комментарий должен быть не более 255 символов");
         }
         return $error;
