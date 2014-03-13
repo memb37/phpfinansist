@@ -48,7 +48,8 @@ class Model_Operation extends Model {
         if(!is_numeric($this->summ)) {
             $error[] =("Сумма должна быть числом");
         }
-        if(!preg_match('/(19|20)\d\d-((0[1-9]|1[012])-(0[1-9]|[12]\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)$/', $this->date)) {
+        if(!preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $this->date, $date) ||
+            !checkdate($date[2], $date[3], $date[1])) {
             $error[] =("Введите дату в формате ГГГГ-ММ-ДД");
         }
         if(strlen($this->comment) > 255) {
