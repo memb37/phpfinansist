@@ -9,8 +9,8 @@
             <label class="col-md-4 control-label" for="email">Email</label>
 
             <div class="col-md-4">
-                <input id="email" name="email" type="email" placeholder="email" class="form-control input-md"
-                       required="">
+                <input id="email" name="email" type="text" placeholder="email" class="form-control input-md"
+                       >
 
             </div>
         </div>
@@ -21,7 +21,7 @@
 
             <div class="col-md-4">
                 <input id="password" name="password" type="password" placeholder="пароль" class="form-control input-md"
-                       required="">
+                       >
 
             </div>
         </div>
@@ -31,7 +31,7 @@
             <label class="col-md-4 control-label" for="name">Имя</label>
 
             <div class="col-md-4">
-                <input id="name" name="name" type="text" placeholder="имя" class="form-control input-md" required="">
+                <input id="name" name="name" type="text" placeholder="имя" class="form-control input-md" >
 
             </div>
         </div>
@@ -48,6 +48,8 @@
 
     </fieldset>
 </form>
-<? if (!empty($data['message'])) : ?>
-<p><?= $data['message'] ?>
-    <? endif; ?>
+<? if (!empty($data)) : ?>
+    <? foreach($data as $msg) : ?>
+        <p><?= $msg ?>
+    <? endforeach; ?>
+<? endif; ?>

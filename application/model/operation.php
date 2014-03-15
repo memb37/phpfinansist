@@ -43,4 +43,18 @@ class Model_Operation extends Model {
             'comment'     => $this->comment);
         $stmt->execute($data);
     }
+
+    public function validate() {
+        if(!is_numeric($this->summ)) {
+            $error[] =("Сумма должна быть числом");
+        }
+        if(!preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $this->date, $date) ||
+            !checkdate($date[2], $date[3], $date[1])) {
+            $error[] =("Введите дату в формате ГГГГ-ММ-ДД");
+        }
+        if(strlen($this->comment) > 255) {
+            $error[] =("Комментарий должен быть не более 255 символов");
+        }
+        return $error;
+    }
 }

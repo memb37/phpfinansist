@@ -23,7 +23,7 @@
                 Сумма
             </td>
             <td>
-                <input type="text" name="summ" size="10" value="0">
+                <input type="text" name="summ" size="10" value="">
             </td>
         </tr>
         <tr>
@@ -50,3 +50,8 @@
     </table>
 
 </form>
+<? if (!empty($message)) : ?>
+    <? foreach($message as $msg) : ?>
+        <p><?= $msg ?>
+    <? endforeach; ?>
+<? endif; ?>

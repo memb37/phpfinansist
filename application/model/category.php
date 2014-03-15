@@ -71,4 +71,9 @@ class Model_Category extends Model {
         $stmt->bindParam(':user_id', $this->user_id);
         $stmt->execute();
     }
+    public function validate() {
+        if(!preg_match('/^[а-яА-Яa-zA-Z0-9-_.,]{1,24}+$/u', $this->name)) {
+            return  "от 1 до 24 символов, буквы, цифры, знак подчеркивания, тире, точка, запятая";
+        }
+    }
 }

@@ -78,4 +78,18 @@ class Model_User extends Model {
     public static function logout() {
         unset($_SESSION['user']);
     }
+
+    public function validate() {
+        $error = array();
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            $error[] = ("Введен неверный email");
+        }
+        if(strlen($this->password) < 5) {
+            $error[] = ("Пароль должен быть не менее 5 символов");
+        }
+        if(strlen($this->name) > 30) {
+            $error[] = ("Имя должно быть не длинее 30 символов");
+        }
+        return $error;
+    }
 }

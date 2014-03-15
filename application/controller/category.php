@@ -8,26 +8,34 @@ class Controller_Category extends Controller {
     }
 
     public function action_create() {
+        $error = array();
         $cat = new Model_Category();
-        $this->view->generate('category/form.php',
-            array('category' => $cat, 'action' => 'category/create'));
         if(!empty($_POST)) {
-            $cat->name = $_POST['category_name'];
-            $cat->user_id = $_SESSION['user']['id'];
-            $cat->save();
-            $this->go_page('category');
+                $cat->name = $_POST['category_name'];
+                $cat->user_id = $_SESSION['user']['id'];
+                $error = $cat->validate();
+                if(empty($error)) {
+                    $cat->save();
+                    $this->go_page('category');
+                }
         }
+        $this->view->generate('category/form.php',
+            array('category' => $cat, 'action' => 'category/create', 'message' => $error));
     }
 
     public function action_edit() {
+        $error = array();
         $category = new Model_Category($_REQUEST['id']);
-        $this->view->generate('category/form.php',
-            array('category' => $category, 'action' => 'category/edit'));
         if(!empty($_POST)) {
-            $category->name = $_POST['category_name'];
-            $category->save();
-            $this->go_page('category');
+                $category->name = $_POST['category_name'];
+                $error = $category->validate();
+                if(empty($error)) {
+                    $category->save();
+                    $this->go_page('category');
+            }
         }
+        $this->view->generate('category/form.php',
+            array('category' => $category, 'action' => 'category/edit', 'message' => $error));
     }
 
     public function action_delete() {
