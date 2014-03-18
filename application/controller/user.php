@@ -1,5 +1,5 @@
 <?php
-
+require_once 'kcaptcha/kcaptcha.php';
 
 class Controller_User extends Controller {
 
