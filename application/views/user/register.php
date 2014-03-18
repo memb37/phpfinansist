@@ -39,7 +39,7 @@
         <!-- Captcha -->
         <div class="form-group">
             <div class="col-md-4 col-md-offset-4">
-                <img src="images/captcha.php?<?php echo session_name()?>=<?php echo session_id()?>">
+                <img src="/user/captcha">
             </div>
         </div>
         <div class="form-group">

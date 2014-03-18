@@ -1,6 +1,6 @@
 <?php
 session_start();
-set_include_path(BASE_PATH . 'application'. PATH_SEPARATOR . get_include_path());
+set_include_path(BASE_PATH . 'application'. PATH_SEPARATOR . BASE_PATH . 'lib' . PATH_SEPARATOR . get_include_path());
 
 
 try
@@ -13,7 +13,7 @@ catch(PDOException $e)
 {
     echo "Не могу подключиться к БД " . $e->getMessage();
 }
-
+require_once 'kcaptcha/kcaptcha.php';
 require_once 'core/model.php';
 require_once 'core/view.php';
 require_once 'core/controller.php';

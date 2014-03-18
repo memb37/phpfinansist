@@ -4,7 +4,7 @@
 class Controller_User extends Controller {
 
     protected function check_auth($action) {
-        if(in_array($action, array('action_login', 'action_register'))) {
+        if(in_array($action, array('action_login', 'action_register', 'action_captcha'))) {
             return;
         }
         parent::check_auth($action);
@@ -50,6 +50,11 @@ class Controller_User extends Controller {
                 }
             }
         $this->view->generate('user/register.php', $error);
+    }
+
+    public function action_captcha() {
+        $captcha = new KCAPTCHA();
+        $_SESSION['captcha_keystring'] = $captcha->getKeyString();
     }
 
 }
