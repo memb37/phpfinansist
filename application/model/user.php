@@ -14,34 +14,34 @@ class Model_User extends Model {
             $stmt->bindParam(':id', $id);
             $stmt->execute();
             $row = $stmt->fetch();
-	    
+
             if($row) {
                 $this->from_array(array(
-                    'id' => $row['user_id'],
-                    'name' => $row['user_name'],
-                    'email' => $row['email'],
+                    'id'       => $row['user_id'],
+                    'name'     => $row['user_name'],
+                    'email'    => $row['email'],
                     'password' => $row['password']
                 ));
-            } 
+            }
         }
     }
-    
+
     public static function find_by_email($email) {
-	global $db;
-	$stmt = $db->prepare("SELECT user_id, user_name, password
+        global $db;
+        $stmt = $db->prepare("SELECT user_id, user_name, password
 			    FROM users WHERE email = :email LIMIT 1");
-	$stmt->bindParam(':email', $email);
-	$stmt->execute();
-	$row = $stmt->fetch();
-	if($row) {
-	    return new Model_User($row['user_id']);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        if($row) {
+            return new Model_User($row['user_id']);
         } else {
-	    return null;
-	}
+            return null;
+        }
     }
-    
+
     protected static function hashed_password($password) {
-	return md5(md5($password));
+        return md5(md5($password));
     }
 
     public static function check($email, $password) {
@@ -81,7 +81,7 @@ class Model_User extends Model {
 
     public function validate() {
         $error = array();
-        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $error[] = ("Введен неверный email");
         }
         if(strlen($this->password) < 5) {
@@ -90,6 +90,11 @@ class Model_User extends Model {
         if(strlen($this->name) > 30) {
             $error[] = ("Имя должно быть не длинее 30 символов");
         }
+        if(!isset($_SESSION['captcha_keystring']) || $_SESSION['captcha_keystring'] !== $_POST['keystring']) {
+            $error[] = ("Введены неверные символы с картинки");
+        }
+        unset($_SESSION['captcha_keystring']);
         return $error;
+
     }
 }

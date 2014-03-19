@@ -36,6 +36,20 @@
             </div>
         </div>
 
+        <!-- Captcha -->
+        <div class="form-group">
+            <div class="col-md-4 col-md-offset-4">
+                <img src="/user/captcha">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="keystring">Введите символы:</label>
+
+            <div class="col-md-4">
+                <input id="keystring" name="keystring" type="text" class="form-control input-md" >
+
+            </div>
+        </div>
 
         <!-- Button -->
         <div class="form-group">
