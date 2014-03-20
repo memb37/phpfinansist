@@ -33,14 +33,10 @@ class Route {
             // вызываем действие контроллера
             $controller->exec_action($action);
         } else {
-            // здесь также разумнее было бы кинуть исключение
-            Route::ErrorPage404();
+            throw new Exception('404');
         }
 
     }
 
-    public static function ErrorPage404() {
-        header('HTTP/1.1 404 Not Found', true, 404);
-        exit('<h1>404 Not found</h1>');
-    }
+
 }
