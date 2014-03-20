@@ -4,4 +4,4 @@ config.php
 .idea/
 .vagrant/
 *.komodo*
-
+*.log
