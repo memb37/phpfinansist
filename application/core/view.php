@@ -5,6 +5,6 @@ class View {
 
     function generate($content_view, $data=array()) {
         extract($data);
-        include '../application/views/'.$this->template;
+        include BASE_PATH . 'application/views/'.$this->template;
     }
 }
