@@ -12,6 +12,7 @@ class Controller_Error extends Controller {
             $this->view->generate('error/404.php');
         }
         else {
+            error_log($exception, 3 ,BASE_PATH . 'error.log');
             $this->view->generate('error/500.php');
         }
 
