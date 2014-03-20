@@ -13,6 +13,9 @@ class Route {
         // получаем имя контроллера
         if(!empty($routes[0])) {
             $controller_name = $routes[0];
+            if(!file_exists(BASE_PATH . 'application/controller/' . $controller_name . '.php')) {
+                throw new Exception('404');
+            }
         }
 
         // получаем имя экшена
