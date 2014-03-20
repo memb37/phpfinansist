@@ -15,7 +15,7 @@ class Controller_Error extends Controller {
             $this->view->generate('error/404.php');
         } else {
             error_log($exception, 3, BASE_PATH.'error.log');
-            $this->view->generate('error/500.php');
+            $this->view->generate('error/500.php', array('fatal' => false));
         }
 
     }
@@ -26,7 +26,7 @@ class Controller_Error extends Controller {
             ob_end_clean();
             error_log("PHP Fatal: ".$error['message']." in "
                 .$error['file'].":".$error['line']."\n", 3, BASE_PATH.'error.log');
-            header('location: Error500.php');
+            $this->view->generate('error/500.php', array('fatal' => true));
         }
     }
 
