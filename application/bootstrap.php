@@ -18,6 +18,7 @@ require_once 'core/model.php';
 require_once 'core/view.php';
 require_once 'core/controller.php';
 require_once 'core/route.php';
+$controllerError = new Controller_Error();
 Route::start(); // запускаем маршрутизатор
 
 function __autoload($class_name) {
