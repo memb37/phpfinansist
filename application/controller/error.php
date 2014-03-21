@@ -14,7 +14,7 @@ class Controller_Error extends Controller {
 
             $this->view->generate('error/404.php');
         } else {
-            error_log($exception, 3, BASE_PATH.'error.log');
+            $this->LogWrite($exception->getMessage(), $exception->getFile(), $exception->getLine());
             $this->view->generate('error/500.php', array('fatal' => false));
         }
 
@@ -24,11 +24,13 @@ class Controller_Error extends Controller {
         $error = error_get_last();
         if(isset($error)) {
             ob_end_clean();
-            error_log("PHP Fatal: ".$error['message']." in "
-                .$error['file'].":".$error['line']."\n", 3, BASE_PATH.'error.log');
+            $this->LogWrite($error['message'], $error['file'], $error['line'], 'fatal');
             $this->view->generate('error/500.php', array('fatal' => true));
         }
     }
 
-
+    public function LogWrite($message, $file, $line, $level = 'error') {
+        $logfile = BASE_PATH . 'logs/' . date('d.m.y') . 'error.log';
+        error_log('PHP ' . $level . ' : ' . $message . ' in ' . $file . ' on line ' . $line . "\n", 3, $logfile);
+    }
 }
