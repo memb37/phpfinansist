@@ -25,3 +25,5 @@ MySQL => 5.0
 	mysql  phpfinansist  < scripts/createdb.sql
 
 Скопируйте config.php.default в config.php и отредактируйте
+
+Установите права на запись в папку logs
