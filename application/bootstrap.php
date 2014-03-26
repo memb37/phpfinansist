@@ -2,6 +2,7 @@
 session_start();
 set_include_path(BASE_PATH . 'application'. PATH_SEPARATOR . BASE_PATH . 'lib' . PATH_SEPARATOR . get_include_path());
 
+date_default_timezone_set('Europe/Moscow');
 
 try
 {
