@@ -5,11 +5,13 @@ class Model_User extends Model {
     public $name;
     public $email;
     public $password;
+    public $recovery_key;
+    public $recovery_time;
 
     public function __construct($id = null) {
         global $db;
         if($id) {
-            $stmt = $db->prepare("SELECT `user_id` ,`user_name`, `email`, `password`
+            $stmt = $db->prepare("SELECT `user_id` ,`user_name`, `email`, `password`, `recovery_key`, `recovery_time`
                                 FROM users WHERE user_id= :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
@@ -20,7 +22,9 @@ class Model_User extends Model {
                     'id'       => $row['user_id'],
                     'name'     => $row['user_name'],
                     'email'    => $row['email'],
-                    'password' => $row['password']
+                    'password' => $row['password'],
+                    'recovery_key' => $row['recovery_key'],
+                    'recovery_time' => $row['recovery_time']
                 ));
             }
         }
@@ -79,7 +83,7 @@ class Model_User extends Model {
         unset($_SESSION['user']);
     }
 
-    public function validate() {
+    public function validate($captcha = true) {
         $error = array();
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $error[] = ("Введен неверный email");
@@ -90,11 +94,62 @@ class Model_User extends Model {
         if(strlen($this->name) > 30) {
             $error[] = ("Имя должно быть не длинее 30 символов");
         }
-        if(!isset($_SESSION['captcha_keystring']) || $_SESSION['captcha_keystring'] !== $_POST['keystring']) {
+        if($captcha && (!isset($_SESSION['captcha_keystring']) || $_SESSION['captcha_keystring'] !== $_POST['keystring'])) {
             $error[] = ("Введены неверные символы с картинки");
         }
         unset($_SESSION['captcha_keystring']);
         return $error;
 
     }
+
+    public static function recovery_init($email) {
+        $error = array();
+        global $db;
+        if(!$user = self::find_by_email($email)) {
+            return array("message" => "Пользователь с адресом $email не зарегистрирован");
+        } else {
+            if(!$error = $user->validate()) {
+                $key = md5(microtime());
+                $stmt = $db->prepare("UPDATE users
+				SET recovery_key = :key, recovery_time = :time
+				WHERE user_id= :user_id");
+                $data = array('key' => $key, 'user_id' => $user->id, 'time' => time());
+                $stmt->execute($data);
+                $link = BASE_URL.'user/password_recovery?id='.$user->id.'&key='.$key;
+                $message = "Для смены пароля перейдите по ссылке:\n" . $link;
+                mail($email, "Восстановление пароля", $message, "From: phpfinansist");
+                return array("message" => "Ссылка для смены пароля отправлена на  $email");
+            }
+        }
+        return $error;
+    }
+
+    public function check_recovery_link($key) {
+        $time_diff = ((time()-$this->recovery_time)/3600);
+        if (($key == $this->recovery_key) && ($time_diff < 24)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function change_password() {
+        global $db;
+        $password = self::hashed_password($this->password);
+        $stmt = $db->prepare("UPDATE users
+				SET password = :password
+				WHERE user_id= :user_id");
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':user_id', $this->id);
+        $stmt->execute();
+    }
+
+    public function recovery_reset() {
+        global $db;
+        $stmt = $db->prepare("UPDATE users
+				SET recovery_key = NULL, recovery_time = NULL
+				WHERE user_id= :user_id");
+        $stmt->bindParam(':user_id', $this->id);
+        $stmt->execute();
+    }
+
 }

@@ -9,6 +9,7 @@
 	</div>
 	<button name="login_button" type="submit" class="btn btn-primary">Войти</button>
 	<a href ="user/register">Регистрация</a>
+    <a href = "user/password_recovery">Забыли пароль?</a>
 	<? if(!empty($data['message'])) : ?>
 		<p><?=$data['message']?>
 	<? endif; ?>

@@ -4,7 +4,7 @@ require_once 'kcaptcha/kcaptcha.php';
 class Controller_User extends Controller {
 
     protected function check_auth($action) {
-        if(in_array($action, array('action_login', 'action_register', 'action_captcha'))) {
+        if(in_array($action, array('action_login', 'action_register', 'action_captcha', 'action_password_recovery'))) {
             return;
         }
         parent::check_auth($action);
@@ -55,6 +55,32 @@ class Controller_User extends Controller {
     public function action_captcha() {
         $captcha = new KCAPTCHA();
         $_SESSION['captcha_keystring'] = $captcha->getKeyString();
+    }
+
+    public function action_password_recovery() {
+        $error = array();
+        if(isset($_GET['id']) && isset($_GET['key'])) {
+            $user = new Model_User($_GET['id']);
+            if(!$user->check_recovery_link($_GET['key'])) {
+                throw new Exception('404');
+            }
+            if(!empty($_POST)) {
+                $user->password = $_POST['password'];
+                $error = $user->validate(false);
+                if(empty($error)) {
+                    $user->change_password();
+                    $user->recovery_reset();
+                    $this->go_page();
+                }
+            }
+            $this->view->generate('user/change_password.php', $error);
+        }
+        else {
+            if(!empty($_POST)) {
+                $error = Model_User::recovery_init($_POST['email']);
+            }
+        $this->view->generate('user/password_recovery.php', $error);
+        }
     }
 
 }
