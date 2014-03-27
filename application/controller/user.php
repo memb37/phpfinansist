@@ -42,7 +42,7 @@ class Controller_User extends Controller {
                     'name' => $_POST['name'],
                     'email' => $_POST['email']
                 ));
-                $error = $user->validate();
+                $error = array_merge($user->validate(), $user->validate_captcha());
                 if(empty($error)) {
                     $error = $user->create();
                 }
@@ -83,7 +83,7 @@ class Controller_User extends Controller {
         if(!empty($_POST)) {
             $user = new Model_User($_SESSION['user']['id']);
             $user->password = $_POST['password'];
-            $error = $user->validate(false);
+            $error = $user->validate();
             if(empty($error)) {
                 $user->change_password();
                 $this->go_page();
