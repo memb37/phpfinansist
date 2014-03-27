@@ -9,9 +9,11 @@ class Controller_Error extends Controller {
     public static function exception_handler($exception) {
         $controller_error = new Controller_Error();
         if($exception->getMessage() == 404) {
+            header('HTTP/1.1 404 Not Found', true, 404);
             $controller_error->view->generate('error/404.php');
         } else {
             $controller_error->LogWrite($exception->getMessage(), $exception->getFile(), $exception->getLine());
+            header('HTTP/1.1 500 Internal Server Error', true, 500);
             $controller_error->view->generate('error/500.php', array('fatal' => false));
         }
     }
@@ -22,6 +24,7 @@ class Controller_Error extends Controller {
             ob_end_clean();
             $controller_error = new Controller_Error();
             $controller_error->LogWrite($error['message'], $error['file'], $error['line'], 'fatal');
+            header('HTTP/1.1 500 Internal Server Error', true, 500);
             $controller_error->view->generate('error/500.php', array('fatal' => true));
         }
     }
