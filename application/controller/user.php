@@ -4,7 +4,8 @@ require_once 'kcaptcha/kcaptcha.php';
 class Controller_User extends Controller {
 
     protected function check_auth($action) {
-        if(in_array($action, array('action_login', 'action_register', 'action_captcha', 'action_password_recovery'))) {
+        if(in_array($action, array('action_login', 'action_register', 'action_captcha',
+            'action_password_recovery', 'action_recovery_activate'))) {
             return;
         }
         parent::check_auth($action);
@@ -59,28 +60,36 @@ class Controller_User extends Controller {
 
     public function action_password_recovery() {
         $error = array();
+        if(!empty($_POST)) {
+        $error = Model_User::recovery_init($_POST['email']);
+        }
+        $this->view->generate('user/password_recovery.php', $error);
+    }
+
+    public function action_recovery_activate() {
         if(isset($_GET['id']) && isset($_GET['key'])) {
             $user = new Model_User($_GET['id']);
             if(!$user->check_recovery_link($_GET['key'])) {
                 throw new Exception('404');
             }
-            if(!empty($_POST)) {
-                $user->password = $_POST['password'];
-                $error = $user->validate(false);
-                if(empty($error)) {
-                    $user->change_password();
-                    $user->recovery_reset();
-                    $this->go_page();
-                }
-            }
-            $this->view->generate('user/change_password.php', $error);
+            $user->recovery_reset();
+            $_SESSION['user'] = array('id' => $user->id, 'name' => $user->name);
+            $this->go_page('user/change_password');
         }
-        else {
-            if(!empty($_POST)) {
-                $error = Model_User::recovery_init($_POST['email']);
+    }
+
+    public function action_change_password() {
+        $error = array();
+        if(!empty($_POST)) {
+            $user = new Model_User($_SESSION['user']['id']);
+            $user->password = $_POST['password'];
+            $error = $user->validate(false);
+            if(empty($error)) {
+                $user->change_password();
+                $this->go_page();
             }
-        $this->view->generate('user/password_recovery.php', $error);
         }
+        $this->view->generate('user/change_password.php', $error);
     }
 
 }

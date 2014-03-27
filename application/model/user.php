@@ -115,7 +115,7 @@ class Model_User extends Model {
 				WHERE user_id= :user_id");
                 $data = array('key' => $key, 'user_id' => $user->id, 'time' => time());
                 $stmt->execute($data);
-                $link = BASE_URL.'user/password_recovery?id='.$user->id.'&key='.$key;
+                $link = BASE_URL.'user/recovery_activate?id='.$user->id.'&key='.$key;
                 $message = "Для смены пароля перейдите по ссылке:\n" . $link;
                 mail($email, "Восстановление пароля", $message, "From: phpfinansist");
                 return array("message" => "Ссылка для смены пароля отправлена на  $email");
