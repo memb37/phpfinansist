@@ -1,0 +1,7 @@
+<?php
+$hostname = getenv('IP');
+$username = getenv('C9_USER');
+$password = "";
+$dbName = "c9";
+
+session_save_path(BASE_PATH . 'runtime/session');
