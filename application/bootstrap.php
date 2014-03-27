@@ -13,12 +13,15 @@ catch(PDOException $e)
 {
     echo "Не могу подключиться к БД " . $e->getMessage();
 }
-require_once 'error_handler.php';
+
 require_once 'core/model.php';
 require_once 'core/view.php';
 require_once 'core/controller.php';
 require_once 'core/route.php';
-$controllerError = new Controller_Error();
+set_error_handler("Controller_Error::exception_error_handler");
+set_exception_handler('Controller_Error::exception_handler');
+register_shutdown_function('Controller_Error::FatalErrorHandler');
+ob_start();
 Route::start(); // запускаем маршрутизатор
 
 function __autoload($class_name) {

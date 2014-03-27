@@ -2,30 +2,27 @@
 
 class Controller_Error extends Controller {
 
-    public function __construct() {
-        set_exception_handler(array($this, 'handler'));
-        register_shutdown_function(array($this, 'FatalErrorHandler'));
-        $this->view = new View();
-        ob_start();
+    public static function exception_error_handler($errno, $errstr, $errfile, $errline) {
+        throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
     }
 
-    public function handler($exception) {
+    public static function exception_handler($exception) {
+        $controller_error = new Controller_Error();
         if($exception->getMessage() == 404) {
-
-            $this->view->generate('error/404.php');
+            $controller_error->view->generate('error/404.php');
         } else {
-            $this->LogWrite($exception->getMessage(), $exception->getFile(), $exception->getLine());
-            $this->view->generate('error/500.php', array('fatal' => false));
+            $controller_error->LogWrite($exception->getMessage(), $exception->getFile(), $exception->getLine());
+            $controller_error->view->generate('error/500.php', array('fatal' => false));
         }
-
     }
 
-    public function FatalErrorHandler() {
+    public static function FatalErrorHandler() {
         $error = error_get_last();
         if(isset($error)) {
             ob_end_clean();
-            $this->LogWrite($error['message'], $error['file'], $error['line'], 'fatal');
-            $this->view->generate('error/500.php', array('fatal' => true));
+            $controller_error = new Controller_Error();
+            $controller_error->LogWrite($error['message'], $error['file'], $error['line'], 'fatal');
+            $controller_error->view->generate('error/500.php', array('fatal' => true));
         }
     }
 
