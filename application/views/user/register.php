@@ -26,6 +26,15 @@
             </div>
         </div>
 
+        <!-- Password input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="re_password">Повторите пароль</label>
+            <div class="col-md-4">
+                <input id="re_password" name="re_password" type="password" placeholder="пароль" class="form-control input-md">
+
+            </div>
+        </div>
+
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="name">Имя</label>

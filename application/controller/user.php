@@ -39,6 +39,7 @@ class Controller_User extends Controller {
                 $user = new Model_User();
                 $user->from_array(array(
                     'password' => $_POST['password'],
+                    're_password' => $_POST['re_password'],
                     'name' => $_POST['name'],
                     'email' => $_POST['email']
                 ));
@@ -83,6 +84,7 @@ class Controller_User extends Controller {
         if(!empty($_POST)) {
             $user = new Model_User($_SESSION['user']['id']);
             $user->password = $_POST['password'];
+            $user->re_password = $_POST['re_password'];
             $error = $user->validate();
             if(empty($error)) {
                 $user->change_password();

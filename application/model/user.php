@@ -5,6 +5,7 @@ class Model_User extends Model {
     public $name;
     public $email;
     public $password;
+    public $re_password;
     public $recovery_key;
     public $recovery_time;
 
@@ -97,6 +98,9 @@ class Model_User extends Model {
         }
         if(strlen($this->password) < 5) {
             $error[] = ("Пароль должен быть не менее 5 символов");
+        }
+        if($this->password != $this->re_password) {
+            $error[] = ("Введенные пароли не совпадают");
         }
         if(strlen($this->name) > 30) {
             $error[] = ("Имя должно быть не длинее 30 символов");

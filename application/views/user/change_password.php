@@ -1,10 +1,36 @@
-<form  method="POST"  class="form-inline" role="form">
-    <div class="form-group">
-        <label class="sr-only" for="InputPassword">Password</label>
-        <input type="password" name="password" required class="form-control" id="InputPassword" placeholder="Password">
-    </div>
-    <button name="change_pass" type="submit" class="btn btn-primary">Сменить пароль</button>
-    <? if (!empty($data)) : ?>
+<form class="form-horizontal" method="POST">
+    <fieldset>
+
+        <!-- Password input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="password">Пароль</label>
+            <div class="col-md-4">
+                <input id="password" name="password" type="password" placeholder="password" class="form-control input-md">
+
+            </div>
+        </div>
+
+        <!-- Password input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="re_password">Повторите пароль</label>
+            <div class="col-md-4">
+                <input id="re_password" name="re_password" type="password" placeholder="password" class="form-control input-md">
+
+            </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="change_password"></label>
+            <div class="col-md-4">
+                <button id="change_password" name="change_password" class="btn btn-primary">Сменить пароль</button>
+            </div>
+        </div>
+
+    </fieldset>
+
+
+<? if (!empty($data)) : ?>
     <? foreach($data as $msg) : ?>
     <p><?= $msg ?>
         <? endforeach; ?>
