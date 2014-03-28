@@ -129,7 +129,7 @@ class Model_User extends Model {
                 $stmt = $db->prepare("UPDATE users
 				SET recovery_key = :key, recovery_time = :time
 				WHERE user_id= :user_id");
-                $data = array('key' => $key, 'user_id' => $user->id, 'time' => time());
+                $data = array('key' => $key, 'user_id' => $user->id, 'time' => date("Y-m-d H:i:s"));
                 $stmt->execute($data);
                 $link = BASE_URL.'user/recovery_activate?id='.$user->id.'&key='.$key;
                 $message = "Для смены пароля перейдите по ссылке:\n" . $link;
@@ -141,8 +141,10 @@ class Model_User extends Model {
     }
 
     public function check_recovery_link($key) {
-        $time_diff = ((time()-$this->recovery_time)/3600);
-        if (($key == $this->recovery_key) && ($time_diff < 24)) {
+        $time1 = new DateTime($this->recovery_time);
+        $time2 = new DateTime("now");
+        $days = date_diff($time1, $time2)->days;
+        if (($key == $this->recovery_key) && ($days < 1)) {
             return true;
         }
         return false;
