@@ -150,16 +150,7 @@ class Model_User extends Model {
         return false;
     }
 
-    public function change_password() {
-        global $db;
-        $password = self::hashed_password($this->password);
-        $stmt = $db->prepare("UPDATE users
-				SET password = :password
-				WHERE user_id= :user_id");
-        $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':user_id', $this->id);
-        $stmt->execute();
-    }
+
 
     public function recovery_reset() {
         global $db;

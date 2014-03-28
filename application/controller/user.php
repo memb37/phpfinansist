@@ -87,7 +87,7 @@ class Controller_User extends Controller {
             $user->re_password = $_POST['re_password'];
             $error = $user->validate();
             if(empty($error)) {
-                $user->change_password();
+                $user->save();
                 $this->go_page();
             }
         }
