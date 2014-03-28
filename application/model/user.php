@@ -70,12 +70,19 @@ class Model_User extends Model {
     public function save() {
         global $db;
         $password = self::hashed_password($this->password);
-        $name = htmlspecialchars($this->name);
-        $email = htmlspecialchars($this->email);
-        $stmt = $db->prepare("INSERT INTO users (password, user_name, email)
+        if($this->id) {
+            $stmt = $db->prepare("UPDATE users
+				SET password = :password
+				WHERE user_id= :user_id");
+            $data = array('password' => $password, 'user_id' => $this->id);
+        } else {
+            $name = htmlspecialchars($this->name);
+            $email = htmlspecialchars($this->email);
+            $stmt = $db->prepare("INSERT INTO users (password, user_name, email)
                             VALUES (:password, :user_name, :email)");
-        $data = array('password'  => $password,
+            $data = array('password'  => $password,
                       'user_name' => $name, 'email' => $email);
+        }
         $stmt->execute($data);
     }
 
