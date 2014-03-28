@@ -52,7 +52,7 @@
 			</ul>
 		</div>
 		<div class="col-md-6  text-center content">		<!-- CONTENT-->
-			<?php include '../application/views/'.$content_view; ?>
+			<?php include BASE_PATH . 'application/views/'.$content_view; ?>
 		</div>
 	</div>
 
