@@ -48,7 +48,7 @@
         <!-- Captcha -->
         <div class="form-group">
             <div class="col-md-4 col-md-offset-4">
-                <img src="/user/captcha">
+                <img src="/captcha">
             </div>
         </div>
         <div class="form-group">

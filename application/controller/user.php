@@ -1,10 +1,9 @@
 <?php
-require_once 'kcaptcha/kcaptcha.php';
 
 class Controller_User extends Controller {
 
     protected function check_auth($action) {
-        if(in_array($action, array('action_login', 'action_register', 'action_captcha',
+        if(in_array($action, array('action_login', 'action_register',
             'action_password_recovery', 'action_recovery_activate'))) {
             return;
         }
@@ -43,7 +42,7 @@ class Controller_User extends Controller {
                     'name' => $_POST['name'],
                     'email' => $_POST['email']
                 ));
-                $error = array_merge($user->validate(), $user->validate_captcha());
+                $error = array_merge($user->validate(), Model_Captcha::validate());
                 if(empty($error)) {
                     $error = $user->create();
                 }
@@ -54,10 +53,6 @@ class Controller_User extends Controller {
         $this->view->generate('user/register.php', $error);
     }
 
-    public function action_captcha() {
-        $captcha = new KCAPTCHA();
-        $_SESSION['captcha_keystring'] = $captcha->getKeyString();
-    }
 
     public function action_password_recovery() {
         $error = array();

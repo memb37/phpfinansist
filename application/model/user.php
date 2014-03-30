@@ -113,14 +113,6 @@ class Model_User extends Model {
 
     }
 
-    public function validate_captcha() {
-        $error = array();
-        if(!isset($_SESSION['captcha_keystring']) || $_SESSION['captcha_keystring'] !== $_POST['keystring']) {
-            $error[] = ("Введены неверные символы с картинки");
-        }
-        unset($_SESSION['captcha_keystring']);
-        return $error;
-    }
 
     public static function recovery_init($email) {
         $error = array();
@@ -128,7 +120,7 @@ class Model_User extends Model {
         if(!$user = self::find_by_email($email)) {
             return array("message" => "Пользователь с адресом $email не зарегистрирован");
         } else {
-            if(!$error = $user->validate_captcha()) {
+            if(!$error = Model_Captcha::validate()) {
                 $key = md5(microtime());
                 $stmt = $db->prepare("UPDATE users
 				SET recovery_key = :key, recovery_time = :time
