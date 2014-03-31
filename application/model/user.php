@@ -123,13 +123,19 @@ class Model_User extends Model {
             if(!$error = Model_Captcha::validate()) {
                 $key = md5(microtime());
                 $stmt = $db->prepare("UPDATE users
-				SET recovery_key = :key, recovery_time = :time
-				WHERE user_id= :user_id");
+                        SET recovery_key = :key, recovery_time = :time
+                        WHERE user_id= :user_id");
                 $data = array('key' => $key, 'user_id' => $user->id, 'time' => date("Y-m-d H:i:s"));
                 $stmt->execute($data);
                 $link = BASE_URL.'user/recovery_activate?id='.$user->id.'&key='.$key;
-                $message = "Для смены пароля перейдите по ссылке:\n" . $link;
-                mail($email, "Восстановление пароля", $message, "From: phpfinansist");
+                $view = new View();
+                $view->template = 'email/template.php';
+                ob_start();
+                $view->generate('email/password_recovery.php', array('link' =>$link));
+                $body = ob_get_clean();
+                $headers  = "Content-type: text/html; charset=utf-8 \r\n";
+                $headers .= "From: <no-reply@phpfinansist.com>\r\n";
+                mail($email, "Восстановление пароля", $body, $headers);
                 return array("message" => "Ссылка для смены пароля отправлена на  $email");
             }
         }
