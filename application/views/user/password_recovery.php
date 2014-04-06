@@ -22,10 +22,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-4 control-label" for="keystring">Введите символы:</label>
+            <label class="col-md-4 control-label" for="captcha">Введите символы:</label>
 
             <div class="col-md-4">
-                <input id="keystring" name="keystring" type="text" class="form-control input-md" >
+                <input id="captcha" name="captcha" type="text" class="form-control input-md" >
 
             </div>
         </div>

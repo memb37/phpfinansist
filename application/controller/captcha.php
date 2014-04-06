@@ -1,5 +1,5 @@
 <?php
-require_once 'kcaptcha/kcaptcha.php';
+
 
 class Controller_Captcha extends Controller {
 
@@ -8,7 +8,8 @@ class Controller_Captcha extends Controller {
     }
 
     public function action_index() {
-        $captcha = new KCAPTCHA();
-        $_SESSION['captcha_keystring'] = $captcha->getKeyString();
+        $captcha = new Model_Captcha();
+        $captcha->render();
+
     }
 }

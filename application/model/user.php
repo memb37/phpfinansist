@@ -120,7 +120,8 @@ class Model_User extends Model {
         if(!$user = self::find_by_email($email)) {
             return array("message" => "Пользователь с адресом $email не зарегистрирован");
         } else {
-            if(!$error = Model_Captcha::validate()) {
+            $captcha = new Model_Captcha();
+            if(!$error = $captcha->validate($_POST['captcha'])) {
                 $key = md5(microtime());
                 $stmt = $db->prepare("UPDATE users
                         SET recovery_key = :key, recovery_time = :time

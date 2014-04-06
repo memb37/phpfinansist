@@ -42,7 +42,8 @@ class Controller_User extends Controller {
                     'name' => $_POST['name'],
                     'email' => $_POST['email']
                 ));
-                $error = array_merge($user->validate(), Model_Captcha::validate());
+                $captcha = new Model_Captcha();
+                $error = array_merge($user->validate(), $captcha->validate($_POST['captcha']));
                 if(empty($error)) {
                     $error = $user->create();
                 }
