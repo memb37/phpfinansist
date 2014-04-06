@@ -45,6 +45,7 @@ class Model_Operation extends Model {
     }
 
     public function validate() {
+        $error = array();
         if(!is_numeric($this->summ)) {
             $error[] =("Сумма должна быть числом");
         }
