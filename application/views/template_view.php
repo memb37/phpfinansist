@@ -59,7 +59,7 @@
 
     <div id="footer">				<!-- FOOTER-->
       <div class="container">
-        <p class="text-muted">Подвальчик</p>
+        <a href="/feedback">обратная связь</a>
       </div>
     </div>
 </body>
