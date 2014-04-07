@@ -99,6 +99,7 @@ php:
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
         error_log: /var/log/apache2/php_error.log
+        sendmail_path: /usr/bin/env catchmail
     timezone: Europe/Moscow
 xdebug:
     install: '1'
