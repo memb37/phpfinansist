@@ -26,6 +26,15 @@
             </div>
         </div>
 
+        <!-- Password input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="re_password">Повторите пароль</label>
+            <div class="col-md-4">
+                <input id="re_password" name="re_password" type="password" placeholder="пароль" class="form-control input-md">
+
+            </div>
+        </div>
+
         <!-- Text input-->
         <div class="form-group">
             <label class="col-md-4 control-label" for="name">Имя</label>
@@ -39,14 +48,14 @@
         <!-- Captcha -->
         <div class="form-group">
             <div class="col-md-4 col-md-offset-4">
-                <img src="/user/captcha">
+                <img src="/additions/captcha">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-4 control-label" for="keystring">Введите символы:</label>
+            <label class="col-md-4 control-label" for="captcha">Введите символы:</label>
 
             <div class="col-md-4">
-                <input id="keystring" name="keystring" type="text" class="form-control input-md" >
+                <input id="captcha" name="captcha" type="text" class="form-control input-md" >
 
             </div>
         </div>
