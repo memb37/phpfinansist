@@ -3,3 +3,4 @@ $hostname = "localhost";
 $username = "phpfinansist";
 $password = "phpfinansist";
 $dbName = "phpfinansist_dev";
+define("EMAIL_SUPPORT", "support@example.com"); // куда отправлять письма из формы обратной связи

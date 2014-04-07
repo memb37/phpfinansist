@@ -17,7 +17,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="email">Ваш email:</label>
             <div class="col-md-4">
-                <input id="email" name="email" type="text" value=<?=$email?> class="form-control input-md">
+                <input id="email" name="email" type="text" value="" class="form-control input-md">
 
             </div>
         </div>
@@ -30,6 +30,23 @@
             </div>
         </div>
 
+        <!-- Captcha -->
+        <? if(!isset($_SESSION['user'])): ?>
+        <div class="form-group">
+            <div class="col-md-4 col-md-offset-4">
+                <img src="/additions/captcha">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="captcha">Введите символы:</label>
+
+            <div class="col-md-4">
+                <input id="captcha" name="captcha" type="text" class="form-control input-md" >
+
+            </div>
+        </div>
+        <? endif;?>
+
         <!-- Button -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="send"></label>
@@ -37,8 +54,10 @@
                 <button id="send" name="send" class="btn btn-primary">Отправить</button>
             </div>
         </div>
-        <? if(isset($message)) : ?>
-        <p><?=$message?>
+        <? if (!empty($data)) : ?>
+        <? foreach($data as $msg) : ?>
+        <p><?= $msg ?>
+            <? endforeach; ?>
             <? endif; ?>
     </fieldset>
 </form>
