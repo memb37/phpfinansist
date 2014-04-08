@@ -62,6 +62,10 @@ class Model_User extends Model {
     }
 
     public function login() {
+        if(!$this->id) {
+            $user = self::find_by_email($this->email);
+            $this->id = $user->id;
+        }
         $_SESSION['user'] = array('id' => $this->id, 'name' => $this->name, 'email' => $this->email);
     }
 

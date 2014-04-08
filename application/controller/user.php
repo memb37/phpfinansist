@@ -48,6 +48,7 @@ class Controller_User extends Controller {
                     $error = $user->create();
                 }
                 if(empty($error)) {
+                    $user->login();
                     $this->go_page();
                 }
             }
