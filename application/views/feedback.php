@@ -17,7 +17,11 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="email">Ваш email:</label>
             <div class="col-md-4">
-                <input id="email" name="email" type="text" value="" class="form-control input-md">
+                <input id="email" name="email" type="text"
+                       <? if(isset($_SESSION['user'])): ?>
+                            value="<?=$_SESSION['user']['email']?>"
+                       <? endif; ?>
+                class="form-control input-md">
 
             </div>
         </div>
