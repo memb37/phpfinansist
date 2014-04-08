@@ -5,9 +5,11 @@ class Controller_Operation extends Controller {
         $date_from = isset($_GET['date_from']) ? $_GET['date_from'] : date('Y-m-01');
         $date_to = isset($_GET['date_to']) ? $_GET['date_to'] : date('Y-m-d');
         $operations = Model_Operation::report($_SESSION['user']['id'], $date_from, $date_to);
+        $balance = Model_Operation::get_balance();
         $this->view->generate('operation/list.php', array('operations' => $operations,
                                                           'date_from'  => $date_from,
-                                                          'date_to'    => $date_to));
+                                                          'date_to'    => $date_to,
+                                                          'balance'    => $balance));
     }
 
 
