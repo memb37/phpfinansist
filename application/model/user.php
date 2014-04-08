@@ -54,11 +54,19 @@ class Model_User extends Model {
             return array("message" => "Неверный логин");
         }
         if($user->password === self::hashed_password($password)) {
-            $_SESSION['user'] = array('id' => $user->id, 'name' => $user->name);
+            $user->login();
             return false;
         } else {
             return array("message" => "Неверный логин или пароль");
         }
+    }
+
+    public function login() {
+        if(!$this->id) {
+            $user = self::find_by_email($this->email);
+            $this->id = $user->id;
+        }
+        $_SESSION['user'] = array('id' => $this->id, 'name' => $this->name, 'email' => $this->email);
     }
 
     public function create() {

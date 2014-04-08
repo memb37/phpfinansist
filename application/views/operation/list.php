@@ -1,10 +1,10 @@
+текущий баланс = <?=$balance?><br><br>
 <a href="operation/create?optype=minus" class="btn btn-default">
     Добавить расход
 </a>
 <a href="operation/create?optype=plus" class="btn btn-default">
     Добавить доход
 </a>
-
 <table class="table table-hover">
     <thead>
     <tr>

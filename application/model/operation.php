@@ -26,6 +26,16 @@ class Model_Operation extends Model {
         return $result;
     }
 
+    public static function get_balance() {
+        global $db;
+        $stmt = $db->prepare("SELECT SUM(summ) FROM operations
+            WHERE operations.user_id = :user_id");
+        $stmt->bindParam(':user_id', $_SESSION['user']['id']);
+        $stmt->execute();
+        $result = $stmt->fetchColumn();
+        return $result;
+    }
+
     public function save($optype) {
         global $db;
         if($optype == 'minus') {

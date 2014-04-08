@@ -48,6 +48,7 @@ class Controller_User extends Controller {
                     $error = $user->create();
                 }
                 if(empty($error)) {
+                    $user->login();
                     $this->go_page();
                 }
             }
@@ -70,7 +71,7 @@ class Controller_User extends Controller {
                 throw new Exception('404');
             }
             $user->recovery_reset();
-            $_SESSION['user'] = array('id' => $user->id, 'name' => $user->name);
+            $user->login();
             $this->go_page('user/change_password');
         }
     }
