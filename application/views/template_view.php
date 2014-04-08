@@ -22,7 +22,7 @@
 			<div class="navbar-collapse collapse navbar-right">
 				<? if(isset($_SESSION['user'])): ?>
 				<p class="navbar-text">
-					<a href="user" class="navbar-link mynavbar-item">Профиль</a>
+					<a href="user" class="navbar-link mynavbar-item"><?=$_SESSION['user']['email']?></a>
 				</p>
 				<p class="navbar-text">
 					<a href="user/logout" class="navbar-link mynavbar-item">Выход</a>

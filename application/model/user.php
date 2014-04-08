@@ -62,7 +62,7 @@ class Model_User extends Model {
     }
 
     public function login() {
-        $_SESSION['user'] = array('id' => $this->id, 'name' => $this->name);
+        $_SESSION['user'] = array('id' => $this->id, 'name' => $this->name, 'email' => $this->email);
     }
 
     public function create() {
